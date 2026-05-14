@@ -1,0 +1,15 @@
+---
+title: System Sequence Diagram - Advance Time (Tick) & Random Events
+---
+sequenceDiagram
+    actor Player as Actor
+    participant System as :System
+
+    Player->>System: advanceTime()
+    %% Il sistema calcola tasse, inquinamento, ecc.
+    System-->>Player: updateDashboardMetrics
+    %% Blocco Opzionale: Si verifica solo se la probabilità scatta
+    opt Random Event Triggered
+        Note right of System: The internal engine triggers for exemple "Fire"
+        System-->>Player: notifyRandomEvent(eventDetails)
+    end

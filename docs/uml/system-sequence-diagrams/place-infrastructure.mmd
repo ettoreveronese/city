@@ -1,0 +1,16 @@
+---
+title: System Sequence Diagram (SSD) - Place Infrastructure
+---
+sequenceDiagram
+    actor Player as Actor
+    participant System as :System
+
+    %% Il giocatore esprime l'intento logico di costruire in una specifica coordinata
+    Player->>System: placeBuilding(buildingType, x, y)
+    
+    %% Il sistema elabora la richiesta come scatola nera e restituisce un risultato
+    alt Costruzione Valida (Spazio libero e fondi sufficienti)
+        System-->>Player: confirmPlacement(newBudget)
+    else Costruzione Non Valida (Es. Cella occupata o fondi insufficienti)
+        System-->>Player: showPlacementError(reason)
+    end

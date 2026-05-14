@@ -2,12 +2,13 @@
 title: System Sequence Diagram - Start New Game & Set Policy
 ---
 sequenceDiagram
-    actor Player
+    actor Player as Actor
     participant System as :System
-    autonumber
 
-    Player->>System: startNewGame
-    System-->>Player: RequestCityDetails
-    Note right of Player: Player inputs name and selects Strategy
-    Player->>System: configureGame(CityName, Policy)
-    System-->>Player: displayCityDashboard
+    Player->>System: startNewGame()
+    System-->>Player: requestCityDetails()
+    
+    Note right of Player: Player inputs name and selects Strategy (e.g., GreenPolicy)
+    Player->>System: configureGame("Topolinia", "GreenPolicy")
+    
+    System-->>Player: displayCityDashboard(initialState)

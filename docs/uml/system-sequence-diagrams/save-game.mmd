@@ -1,0 +1,20 @@
+---
+title: System Sequence Diagram (SSD) - Save Game
+---
+sequenceDiagram
+    actor Player as Actor
+    participant System as :System
+
+    %% 1. Inizio dell'interazione
+    Player->>System: requestSaveGame()
+    System-->>Player: promptSaveLocation()
+    
+    %% 2. Fornitura dei dati necessari (Nome file)
+    Player->>System: confirmSave(fileName)
+    
+    %% 3. Gestione dei risultati alternativi (Slide 46)
+    alt Operazione riuscita
+        System-->>Player: showSuccessMessage()
+    else Errore (es. Disco pieno o Nome non valido)
+        System-->>Player: showErrorMessage(reason)
+    end
