@@ -1,0 +1,207 @@
+classDiagram
+
+%% ===================== ENGINE =====================
+
+class CityEngine {
+    -CityGrid grid
+    -CityState state
+    -PolicyStrategy policy
+    -EventManager eventManager
+    -SpatialInfluenceEngine influenceEngine
+    -ConstructionSystem constructionSystem
+    -ConnectivityManager connectivityManager
+    -List~Observer~ observers
+
+    +triggerTick()
+    +placeEntity(type, x, y)
+    +setPolicy(policy)
+    +addObserver(o)
+    +notifyObservers()
+}
+
+class CityGrid {
+    -Cell[][] cells
+    +setEntity(x, y, e)
+    +getEntity(x, y) Entity
+}
+
+class Cell {
+    -int x
+    -int y
+    -Entity entity
+}
+
+class CityState {
+    -int population
+    -int budget
+    -double energy
+    -double pollution
+    -double happiness
+    -double health
+
+    +updateMetrics()
+    +resetTickValues()
+}
+
+%% ===================== ENTITY CORE =====================
+
+class Entity {
+    <<abstract>>
+    -int x
+    -int y
+    -boolean active
+
+    +applyEffects(state)
+    +onTick(state)
+}
+
+class BuildingBlueprint {
+    -BuildingType type
+    -int requiredPopulation
+    -int requiredBudget
+    -BuildingStats stats
+}
+
+class BuildingStats {
+    -int size
+    -int areaOfEffet
+    -int income
+    -int maintenanceCost
+    -int populationCapacity
+    -double happinessImpact
+    -double pollutionImpact
+    -double healthImpact
+    -double energyConsumption
+}
+
+%% ===================== ENTITIES =====================
+
+class Residential {
+}
+
+class Industrial {
+}
+
+class Park {
+}
+
+class PowerPlant {
+}
+
+class Road {
+}
+
+class FireStation {
+}
+
+class Hospital
+
+%% ===================== SYSTEMS =====================
+class ConnectivityManager {
+    +isConnectedToRoad()
+}
+
+class ConstructionSystem {
+    +canBuild(blueprint, state) bool
+    +build(blueprint, grid, x, y)
+}
+
+class EventManager {
+    -List~CityEvent~ events
+    +triggerEvent(event)
+    +update(state CityState)
+}
+
+class CityEvent {
+    <<abstract>>
+    +apply(state CityState)
+    +onTick(state CityState)
+}
+
+class FireEvent {
+    -int radius
+}
+
+class PandemicEvent {
+    -int healthImpact
+}
+
+class SpatialInfluenceEngine {
+    +computePollution(grid) double
+    +computeHealth(grid) double
+    +computeHappiness(grid) double
+}
+
+%% ===================== POLICY =====================
+
+class PolicyStrategy {
+    <<interface>>
+    +modifyIncome(value) double
+    +modifyPollution(value) double
+    +calculateTax(state CityState) int
+}
+
+class EnvironmentalTax {
+    +modifyIncome(value) double
+    +modifyPollution(value) double
+    +calculateTax(state CityState) int
+}
+
+class IndustrialExpansion {
+    +modifyIncome(value) double
+    +modifyPollution(value) double
+    +calculateTax(state CityState) int
+}
+
+%% ===================== OBSERVER =====================
+
+class Observer {
+    <<interface>>
+    +update(state CityState)
+}
+
+class DashboardUI {
+    +update(state CityState)
+}
+
+%% ===================== FACTORY =====================
+
+class EntityFactory {
+    +createEntity(type, blueprint, x, y) Entity
+}
+
+%% ===================== RELATIONSHIPS =====================
+
+CityEngine *-- CityGrid
+CityEngine *-- CityState
+CityEngine *-- EventManager
+CityEngine *-- ConnectivityManager
+CityEngine *-- SpatialInfluenceEngine
+CityEngine *-- ConstructionSystem
+CityEngine o-- EntityFactory
+
+CityEngine o-- PolicyStrategy
+CityEngine o-- Observer
+
+CityGrid *-- Cell
+Cell o-- Entity
+
+Entity <|-- Residential
+Entity <|-- Industrial
+Entity <|-- Park
+Entity <|-- PowerPlant
+Entity <|-- Road
+Entity <|-- FireStation
+Entity <|-- Hospital
+
+Entity o-- BuildingBlueprint
+BuildingBlueprint o-- BuildingStats
+
+PolicyStrategy <|.. EnvironmentalTax
+PolicyStrategy <|.. IndustrialExpansion
+
+Observer <|.. DashboardUI
+
+EventManager o-- CityEvent
+CityEvent <|-- FireEvent
+CityEvent <|-- PandemicEvent
