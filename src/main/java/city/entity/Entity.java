@@ -2,11 +2,6 @@ package city.entity;
 
 import city.model.StateDelta;
 
-/**
- * Classe base astratta per tutte le entità logiche posizionabili sulla griglia urbana.
- * Definisce il comportamento comune del ciclo di vita di un oggetto nella simulazione.
- */
-
 // abstract class for every entity positionable on the grid
 public abstract class Entity {
     private final int x;
