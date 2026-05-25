@@ -22,6 +22,6 @@ public class IndustrialPolicy implements CityPolicy {
 
     @Override
     public void applyPolicyEffects(CityState city) {
-        city.setGlobalHappiness(city.getGlobalHappiness() - 1.0);
+        //city.setGlobalHappiness(city.getGlobalHappiness() - 1.0);
     }
 }

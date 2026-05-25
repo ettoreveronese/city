@@ -22,6 +22,6 @@ public class GreenPolicy implements CityPolicy {
 
     @Override
     public void applyPolicyEffects(CityState city) {
-        city.setGlobalHappiness(city.getGlobalHappiness() + 2.0);
+        //city.setGlobalHappiness(city.getGlobalHappiness() + 2.0);
     }
 }
