@@ -1,26 +1,27 @@
 package com.cityproject.presentation;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.cityproject.engine.SimulationEngine;
-import com.cityproject.model.CityState;
-import com.cityproject.model.CityObserver;
 import com.cityproject.model.Cell;
-import com.cityproject.model.Infrastructure;import com.cityproject.model.buildings.*;
+import com.cityproject.model.CityObserver;
+import com.cityproject.model.CityState;
+import com.cityproject.model.Infrastructure;
+import com.cityproject.model.buildings.Road;
 import com.cityproject.model.factory.BuildingFactory;
 import com.cityproject.model.policy.GreenPolicy;
 import com.cityproject.model.policy.IndustrialPolicy;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.Button;import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-
-import java.net.URL;
-import java.util.ResourceBundle;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 /**
  * OBSERVER PATTERN: implements CityObserver to receive updates after each tick.

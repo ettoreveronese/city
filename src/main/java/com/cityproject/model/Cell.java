@@ -24,10 +24,13 @@ public class Cell {
 
     public int getX()           { return x; }
     public int getY()           { return y; }
+    
     public int getPollution()   { return pollution; }
     public void setPollution(int pollution) { this.pollution = Math.max(0, pollution); }
+    
     public boolean hasFireProtection()  { return fireProtection; }
     public void setFireProtection(boolean fp) { this.fireProtection = fp; }
+    
     public Infrastructure getStructure()    { return structure; }
     public void setStructure(Infrastructure s) { this.structure = s; }
 }

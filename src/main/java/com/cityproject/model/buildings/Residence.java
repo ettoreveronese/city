@@ -19,11 +19,11 @@ public class Residence extends Infrastructure implements HasHousing {
     public Residence(String id, int x, int y, Type type) {
         super(id, x, y, getBuildCost(type));
         this.type = type;
-        this.localHappiness = 50.0;
-        this.localHealth = 50.0;
+        this.localHappiness = 70.0;
+        this.localHealth = 80.0;
     }
 
-    // --- Values from bibbia ---
+    // --- Values ---
     private static int getBuildCost(Type t) {
         return switch (t) { case COTTAGE -> 500; case CONDO -> 1500; case SKYSCRAPER -> 50000; };
     }
@@ -40,15 +40,18 @@ public class Residence extends Infrastructure implements HasHousing {
         return switch (type) { case COTTAGE -> 10; case CONDO -> 25; case SKYSCRAPER -> 100; };
     }
 
+
+    //todo LOGICA DA SPOSTARE
     @Override
     public void applyEffects(CityState city) {
+        // if is not active, than happiness drops to 0 and health is halved
         if (!isActive()) {
             // Deactivated residences: happiness drops to 0, health halved
             this.localHappiness = 0;
             this.localHealth = this.localHealth / 2;
             return;
         }
-        // Add residents and rent to city
+        // TODO non va bene, in questo modo la popolazione cresce ogni tick (da fare con le liste)
         city.setPopulation(city.getPopulation() + getCapacity());
         city.setBudget(city.getBudget() + getRent());
 
