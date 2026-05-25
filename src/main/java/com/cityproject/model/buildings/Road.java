@@ -2,13 +2,14 @@ package com.cityproject.model.buildings;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
+import com.cityproject.model.aspects.HasMaintenance;
 
 /**
  * Road segment. Used by the VCS (Road Connection Verification) algorithm.
  * Buildings are only active if connected to the root road via roads.
  * The root road (Strada-Radice) is indestructible and placed at map center.
  */
-public class Road extends Infrastructure {
+public class Road extends Infrastructure implements HasMaintenance {
 
     private final boolean isRoot; // true only for Strada-Radice
 
@@ -18,6 +19,11 @@ public class Road extends Infrastructure {
     }
 
     public boolean isRoot() { return isRoot; }
+
+    @Override
+    public int getMaintenanceCost() {
+        return isRoot ? 0 : 5; // Root road has no maintenance cost
+    }
 
     @Override public int getEnergyConsumption() { return 0; }
 

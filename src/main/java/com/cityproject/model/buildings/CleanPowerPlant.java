@@ -25,7 +25,6 @@ public class CleanPowerPlant extends PowerPlant implements HasMaintenance {
             case NUCLEAR -> 15000;
         };
     }
-
     private static int getEnergy(Type t) {
         return switch (t) {
             case SOLAR   -> 20;   // from bibbia: fotovoltaico 20
@@ -33,7 +32,6 @@ public class CleanPowerPlant extends PowerPlant implements HasMaintenance {
             case NUCLEAR -> 250;  // from bibbia: nucleare 250
         };
     }
-
     @Override
     public int getMaintenanceCost() {
         return switch (type) {
