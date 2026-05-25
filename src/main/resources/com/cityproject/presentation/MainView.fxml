@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cityproject.presentation.MainController"
+            prefWidth="1100" prefHeight="700">
+
+    <!-- ===== TOP BAR: stats ===== -->
+    <top>
+        <HBox spacing="24" style="-fx-background-color:#1e1e2e; -fx-padding:10 20;">
+            <Label text="CityLogic" style="-fx-font-size:18; -fx-font-weight:bold; -fx-text-fill:white;"/>
+            <Label text="Tick:" style="-fx-text-fill:#aaa;"/>
+            <Label fx:id="tickLabel" text="0" style="-fx-text-fill:white; -fx-font-weight:bold;"/>
+            <Label text="Budget:" style="-fx-text-fill:#aaa;"/>
+            <Label fx:id="budgetLabel" text="0" style="-fx-text-fill:#4ade80; -fx-font-weight:bold;"/>
+            <Label text="Population:" style="-fx-text-fill:#aaa;"/>
+            <Label fx:id="populationLabel" text="0" style="-fx-text-fill:#60a5fa; -fx-font-weight:bold;"/>
+            <Label text="Happiness:" style="-fx-text-fill:#aaa;"/>
+            <Label fx:id="happinessLabel" text="50%" style="-fx-text-fill:#facc15; -fx-font-weight:bold;"/>
+            <Label text="Health:" style="-fx-text-fill:#aaa;"/>
+            <Label fx:id="healthLabel" text="50%" style="-fx-text-fill:#f472b6; -fx-font-weight:bold;"/>
+            <Label text="Policy:" style="-fx-text-fill:#aaa;"/>
+            <Label fx:id="policyLabel" text="-" style="-fx-text-fill:#c084fc; -fx-font-weight:bold;"/>
+        </HBox>
+    </top>
+
+    <!-- ===== CENTER: grid ===== -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true"
+                    style="-fx-background-color:#13131f;">
+            <GridPane fx:id="cityGrid"
+                      hgap="1" vgap="1"
+                      style="-fx-background-color:#13131f; -fx-padding:8;"/>
+        </ScrollPane>
+    </center>
+
+    <!-- ===== RIGHT: controls ===== -->
+    <right>
+        <ScrollPane fitToWidth="true"
+                        style="-fx-background-color:#1e1e2e; -fx-background:#1e1e2e;"
+                        prefWidth="210">
+                <VBox spacing="10" style="-fx-background-color:#1e1e2e; -fx-padding:16;"
+                        prefWidth="190">
+
+                        <fx:define>
+                                <ToggleGroup fx:id="visionGroup"/>
+                        </fx:define>
+
+
+                        <!-- TICK button -->
+                        <Button fx:id="tickButton" text="⏭ Next Tick"
+                        onAction="#handleTick"
+                        maxWidth="Infinity"
+                        style="-fx-background-color:#6366f1; -fx-text-fill:white;
+                                -fx-font-weight:bold; -fx-font-size:14; -fx-padding:8;"/>
+                        <Button text="🗑 Delete Building" onAction="#handleSelectBuilding" id="DELETE"
+                                maxWidth="Infinity"
+                                style="-fx-background-color:#4a0000; -fx-text-fill:white;
+                                -fx-font-weight:bold; -fx-font-size:13; -fx-padding:8;"/>
+
+                <Separator/>
+
+                <!-- VISION MODE -->
+                <Label text="Vision Mode" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+                <RadioButton fx:id="visionNormal"     text="Normal"      toggleGroup="$visionGroup"
+                                onAction="#handleVisionChange" selected="true"
+                                style="-fx-text-fill:white;"/>
+                <RadioButton fx:id="visionPollution"  text="Pollution"   toggleGroup="$visionGroup"
+                                onAction="#handleVisionChange"
+                                style="-fx-text-fill:white;"/>
+                <RadioButton fx:id="visionFire"       text="Fire Cover"  toggleGroup="$visionGroup"
+                                onAction="#handleVisionChange"
+                                style="-fx-text-fill:white;"/>
+
+                <Separator/>
+
+                <!-- POLICY -->
+                <Label text="Active Policy" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+                <Button text="🌿 Green Policy"      onAction="#handleGreenPolicy"
+                        maxWidth="Infinity"
+                        style="-fx-background-color:#166534; -fx-text-fill:white;"/>
+                <Button text="🏭 Industrial Policy" onAction="#handleIndustrialPolicy"
+                        maxWidth="Infinity"
+                        style="-fx-background-color:#7c2d12; -fx-text-fill:white;"/>
+
+                <Separator/>
+
+                <!-- BUILD: Residences -->
+                <Label text="Residences" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+                <Button text="🏠 Cottage"     onAction="#handleSelectBuilding" id="COTTAGE"
+                        maxWidth="Infinity" style="-fx-background-color:#2d4a22; -fx-text-fill:white;"/>
+                <Button text="🏢 Condo"       onAction="#handleSelectBuilding" id="CONDO"
+                        maxWidth="Infinity" style="-fx-background-color:#2d4a22; -fx-text-fill:white;"/>
+                <Button text="🏙 Skyscraper"  onAction="#handleSelectBuilding" id="SKYSCRAPER"
+                        maxWidth="Infinity" style="-fx-background-color:#2d4a22; -fx-text-fill:white;"/>
+
+                <!-- BUILD: Production -->
+                <Label text="Production" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+                <Button text="🍞 Food"         onAction="#handleSelectBuilding" id="FOOD"
+                        maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
+                <Button text="⚙️ Metallurgical" onAction="#handleSelectBuilding" id="METALLURGICAL"
+                        maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
+                <Button text="🛢 Petrochemical" onAction="#handleSelectBuilding" id="PETROCHEMICAL"
+                        maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
+
+                <!-- BUILD: Power -->
+                <Label text="Power Plants" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+                <Button text="☀️ Solar"    onAction="#handleSelectBuilding" id="SOLAR"
+                        maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+                <Button text="☢️ Nuclear"  onAction="#handleSelectBuilding" id="NUCLEAR"
+                        maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+                <Button text="🏭 Coal"     onAction="#handleSelectBuilding" id="COAL"
+                        maxWidth="Infinity" style="-fx-background-color:#3b1f1f; -fx-text-fill:white;"/>
+
+                <!-- BUILD: Services -->
+                <Label text="Services" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+                <Button text="🌳 Park"         onAction="#handleSelectBuilding" id="PARK"
+                        maxWidth="Infinity" style="-fx-background-color:#14532d; -fx-text-fill:white;"/>
+                <Button text="🏥 Hospital"     onAction="#handleSelectBuilding" id="HOSPITAL"
+                        maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+                <Button text="🚒 Fire Station" onAction="#handleSelectBuilding" id="FIRE_STATION"
+                        maxWidth="Infinity" style="-fx-background-color:#7f1d1d; -fx-text-fill:white;"/>
+                <Button text="🛣 Road"         onAction="#handleSelectBuilding" id="ROAD"
+                        maxWidth="Infinity" style="-fx-background-color:#374151; -fx-text-fill:white;"/>
+
+                <Separator/>
+
+                <!-- Selected building label -->
+                <Label text="Selected:" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+                <Label fx:id="selectedLabel" text="none"
+                        style="-fx-text-fill:#facc15; -fx-font-weight:bold;"/>
+
+                <!-- Event log -->
+                <Separator/>
+                <Label text="Event Log" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+                <TextArea fx:id="eventLog" editable="false" prefHeight="80"
+                        style="-fx-control-inner-background:#13131f;
+                                -fx-text-fill:#9ca3af; -fx-font-size:10;"/>
+                </VBox>
+        </ScrollPane>
+        </right>
+
+</BorderPane>
