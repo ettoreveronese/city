@@ -3,7 +3,7 @@ package com.cityproject.presentation;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.cityproject.engine.SimulationEngine;
+import com.cityproject.business.SimulationEngine;
 import com.cityproject.model.Cell;
 import com.cityproject.model.CityObserver;
 import com.cityproject.model.CityState;

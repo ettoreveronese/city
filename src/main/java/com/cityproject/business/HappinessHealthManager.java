@@ -1,4 +1,4 @@
-package com.cityproject.engine;
+package com.cityproject.business;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
