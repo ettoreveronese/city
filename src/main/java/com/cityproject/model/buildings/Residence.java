@@ -17,7 +17,7 @@ public class Residence extends Infrastructure implements HasHousing {
     private double localHealth;
 
     public Residence(String id, int x, int y, Type type) {
-        super(id, x, y, getWidth(type), getHeight(type), getBuildCost(type));
+        super(id, x, y, getBuildCost(type));
         this.type = type;
         this.localHappiness = 50.0;
         this.localHealth = 50.0;
@@ -26,12 +26,6 @@ public class Residence extends Infrastructure implements HasHousing {
     // --- Values from bibbia ---
     private static int getBuildCost(Type t) {
         return switch (t) { case COTTAGE -> 500; case CONDO -> 1500; case SKYSCRAPER -> 50000; };
-    }
-    private static int getWidth(Type t) {
-        return switch (t) { case COTTAGE -> 1; case CONDO -> 2; case SKYSCRAPER -> 4; };
-    }
-    private static int getHeight(Type t) {
-        return switch (t) { case COTTAGE -> 1; case CONDO -> 2; case SKYSCRAPER -> 4; };
     }
 
     @Override public int getCapacity() {

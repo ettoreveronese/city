@@ -10,17 +10,13 @@ public abstract class Entity {
     private final String id;
     private final int x;
     private final int y;
-    private final int width;
-    private final int height;
     private boolean active;
     private final int buildCost;
 
-    public Entity(String id, int x, int y, int width, int height, int buildCost) {
+    public Entity(String id, int x, int y, int buildCost) {
         this.id = id;
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
         this.active = true;
         this.buildCost = buildCost;
     }
@@ -41,8 +37,6 @@ public abstract class Entity {
     public String getId()       { return id; }
     public int getX()           { return x; }
     public int getY()           { return y; }
-    public int getWidth()       { return width; }
-    public int getHeight()      { return height; }
     public boolean isActive()   { return active; }
     public int getBuildCost()   { return buildCost; }
     public void setActive(boolean active) { this.active = active; }

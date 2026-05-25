@@ -16,7 +16,7 @@ public class DirtyPowerPlant extends PowerPlant implements HasPollution, HasMain
     private final Type type;
 
     public DirtyPowerPlant(String id, int x, int y, Type type) {
-        super(id, x, y, 2, 2, getBuildCost(type), getEnergy(type));
+        super(id, x, y, getBuildCost(type), getEnergy(type));
         this.type = type;
     }
 

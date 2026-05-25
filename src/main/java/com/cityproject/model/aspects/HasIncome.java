@@ -6,4 +6,5 @@ package com.cityproject.model.aspects;
  */
 public interface HasIncome {
     int getIncome(); // money added to budget each tick
+    
 }

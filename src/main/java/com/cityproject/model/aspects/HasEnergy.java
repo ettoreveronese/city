@@ -6,4 +6,5 @@ package com.cityproject.model.aspects;
  */
 public interface HasEnergy {
     int getEnergyProduced(); // energy units produced each tick
+    
 }

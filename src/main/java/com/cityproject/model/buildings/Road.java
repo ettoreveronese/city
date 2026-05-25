@@ -13,7 +13,7 @@ public class Road extends Infrastructure {
     private final boolean isRoot; // true only for Strada-Radice
 
     public Road(String id, int x, int y, boolean isRoot) {
-        super(id, x, y, 1, 1, isRoot ? 0 : 100);
+        super(id, x, y, isRoot ? 0 : 100);
         this.isRoot = isRoot;
     }
 

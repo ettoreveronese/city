@@ -12,7 +12,7 @@ import com.cityproject.model.aspects.HasMaintenance;
 public class FireStation extends Infrastructure implements HasFireCoverage, HasMaintenance {
 
     public FireStation(String id, int x, int y) {
-        super(id, x, y, 1, 1, 1500);
+        super(id, x, y, 1500);
     }
 
     @Override public int getFireRadius()      { return 4; }

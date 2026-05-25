@@ -14,7 +14,7 @@ public class HealthBuilding extends Infrastructure implements HasMaintenance {
     private final Type type;
 
     public HealthBuilding(String id, int x, int y, Type type) {
-        super(id, x, y, 1, 1, getBuildCost(type));
+        super(id, x, y, getBuildCost(type));
         this.type = type;
     }
 

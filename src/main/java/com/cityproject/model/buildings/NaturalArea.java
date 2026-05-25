@@ -16,18 +16,12 @@ public class NaturalArea extends Infrastructure implements HasMaintenance {
     private final Type type;
 
     public NaturalArea(String id, int x, int y, Type type) {
-        super(id, x, y, getWidth(type), getHeight(type), getBuildCost(type));
+        super(id, x, y, getBuildCost(type));
         this.type = type;
     }
 
     private static int getBuildCost(Type t) {
         return switch (t) { case PARK -> 500; case NATURE_RESERVE -> 2000; case NATIONAL_PARK -> 5000; };
-    }
-    private static int getWidth(Type t) {
-        return switch (t) { case PARK -> 1; case NATURE_RESERVE -> 2; case NATIONAL_PARK -> 4; };
-    }
-    private static int getHeight(Type t) {
-        return switch (t) { case PARK -> 1; case NATURE_RESERVE -> 2; case NATIONAL_PARK -> 4; };
     }
 
     public int getRadius() {

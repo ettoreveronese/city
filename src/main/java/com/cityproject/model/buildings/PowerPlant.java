@@ -12,9 +12,8 @@ public abstract class PowerPlant extends Infrastructure implements HasEnergy {
 
     private final int energyProduced;
 
-    public PowerPlant(String id, int x, int y, int width, int height,
-                      int buildCost, int energyProduced) {
-        super(id, x, y, width, height, buildCost);
+    public PowerPlant(String id, int x, int y, int buildCost, int energyProduced) {
+        super(id, x, y, buildCost);
         this.energyProduced = energyProduced;
     }
 

@@ -17,7 +17,7 @@ public class ProductionBuilding extends Infrastructure implements HasIncome, Has
     private final Type type;
 
     public ProductionBuilding(String id, int x, int y, Type type) {
-        super(id, x, y, 2, 2, getBuildCost(type));
+        super(id, x, y, getBuildCost(type));
         this.type = type;
     }
 

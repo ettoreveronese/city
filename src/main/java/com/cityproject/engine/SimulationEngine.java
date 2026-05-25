@@ -1,11 +1,22 @@
 package com.cityproject.engine;
 
-import com.cityproject.model.*;
-import com.cityproject.model.aspects.*;
-import com.cityproject.model.buildings.*;
-import com.cityproject.model.policy.CityPolicy;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
 
-import java.util.*;
+import com.cityproject.model.Cell;
+import com.cityproject.model.CityState;
+import com.cityproject.model.Infrastructure;
+import com.cityproject.model.aspects.HasEnergy;
+import com.cityproject.model.aspects.HasMaintenance;
+import com.cityproject.model.aspects.HasPollution;
+import com.cityproject.model.buildings.Residence;
+import com.cityproject.model.buildings.Road;
+import com.cityproject.model.policy.CityPolicy;
 
 /**
  * The core simulation engine. Executes one "tick" at a time.
@@ -100,15 +111,15 @@ public class SimulationEngine {
     }
 
     private boolean isAdjacentToConnectedRoad(Infrastructure b, Set<String> connectedRoads) {
-        // Check all cells around the building footprint
-        for (int dx = -1; dx <= b.getWidth(); dx++) {
-            for (int dy = -1; dy <= b.getHeight(); dy++) {
-                int nx = b.getX() + dx;
-                int ny = b.getY() + dy;
-                if (!city.isValid(nx, ny)) continue;
-                Infrastructure s = city.getCell(nx, ny).getStructure();
-                if (s instanceof Road && connectedRoads.contains(s.getId())) return true;
-            }
+        // Check cells adjacent to the building
+        int[] dx = {-1, 0, 1, 0};
+        int[] dy = {0, -1, 0, 1};
+        for (int i = 0; i < 4; i++) {
+            int nx = b.getX() + dx[i];
+            int ny = b.getY() + dy[i];
+            if (!city.isValid(nx, ny)) continue;
+            Infrastructure s = city.getCell(nx, ny).getStructure();
+            if (s instanceof Road && connectedRoads.contains(s.getId())) return true;
         }
         return false;
     }
