@@ -1,21 +1,6 @@
 package com.cityproject.engine;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Set;
-
-import com.cityproject.model.Cell;
 import com.cityproject.model.CityState;
-import com.cityproject.model.Infrastructure;
-import com.cityproject.model.aspects.HasEnergy;
-import com.cityproject.model.aspects.HasMaintenance;
-import com.cityproject.model.aspects.HasPollution;
-import com.cityproject.model.buildings.Residence;
-import com.cityproject.model.buildings.Road;
 import com.cityproject.model.policy.CityPolicy;
 
 /**
@@ -50,16 +35,38 @@ public class SimulationEngine {
     public void tick() {
         city.incrementTick();
 
-        step1_checkRoadConnections();
-        step2_energyBalance();
-        step3_applyPollution();
-        step4_applyHappinessAndHealth();
-        step5_incomeAndMaintenance();
-        step6_events();
+        // delegate to managers
+        RoadConnectionManager rcManager = new RoadConnectionManager(city);
+        EnergyBalanceManager ebManager = new EnergyBalanceManager(city);
+        PollutionManager pManager = new PollutionManager(city, activePolicy);
+        HappinessHealthManager hhManager = new HappinessHealthManager(city);
+        BudgetManager bManager = new BudgetManager(city, activePolicy);
+        EventManager eManager = new EventManager(city);
+
+        rcManager.checkConnections();
+        ebManager.balanceEnergy();
+        pManager.applyPollution();
+        hhManager.applyHappinessAndHealth();
+        bManager.processIncomeAndMaintenance();
+        eManager.processEvents();
 
         // Notify all observers (Dashboard, Logger, etc.)
         city.notifyObservers();
     }
+
+    // Legacy: step methods removed. Logic is now delegated to dedicated manager classes:
+    // RoadConnectionManager, EnergyBalanceManager, PollutionManager,
+    // HappinessHealthManager, BudgetManager, EventManager.
+}
+
+
+/**
+ * The core simulation engine. Executes one "tick" at a time.
+ * Follows exactly the 6-step sequence defined in the bibbia.
+ * GRASP Controller: coordinates all simulation logic without doing calculations itself.
+ */
+
+    /*
 
     // -------------------------------------------------------------------------
     // STEP 1 — Road connection check (VCS algorithm from bibbia)
@@ -286,4 +293,4 @@ public class SimulationEngine {
             }
         }
     }
-}
+        */
