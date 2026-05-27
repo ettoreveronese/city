@@ -15,7 +15,7 @@ Il pattern dice: Se hai molti "tipi" di un oggetto che condividono la stessa log
 
 
 **
-4. Data-Driven Design
+4. Data-Driven Design (con json)
     
 
     {
