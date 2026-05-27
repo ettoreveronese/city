@@ -1,6 +1,5 @@
 package com.cityproject.model.buildings;
 
-import com.cityproject.model.Cell;
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
 import com.cityproject.model.aspects.HasIncome;
@@ -29,13 +28,19 @@ public class ProductionBuilding extends Infrastructure implements HasIncome, Has
         return switch (type) { case FOOD -> 300; case METALLURGICAL -> 600; case PETROCHEMICAL -> 1000; };
     }
     @Override public int getPollutionLevel() {
-        return switch (type) { case FOOD -> 10; case METALLURGICAL -> 30; case PETROCHEMICAL -> 50; };
+        return switch (type) { case FOOD -> 10; case METALLURGICAL -> 20; case PETROCHEMICAL -> 30; };
     }
-    @Override public int getRange() { return 3; }
+    @Override public int getRange() {
+        return switch (type) { case FOOD -> 2; case METALLURGICAL -> 3; case PETROCHEMICAL -> 4; };
+    }
+
+    // @Override public int getRange() { return 3; }
     @Override public int getEnergyConsumption() { return 50; }
 
+    
     @Override
     public void applyEffects(CityState city) {
+        /*
         if (!isActive()) return;
 
         // Add income to budget
@@ -49,10 +54,11 @@ public class ProductionBuilding extends Infrastructure implements HasIncome, Has
                 if (city.isValid(nx, ny)) {
                     Cell cell = city.getCell(nx, ny);
                     int distance = Math.abs(dx) + Math.abs(dy);
-                    cell.setPollution(cell.getPollution() + getPollutionLevel() / (distance + 1));
+                    cell.setPollution(cell.getPollution() + getPollutionLevel() / (distance + 1));//
                 }
             }
         }
+            */
     }
 
     public Type getType() { return type; }

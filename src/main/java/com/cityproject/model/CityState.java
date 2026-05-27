@@ -28,6 +28,9 @@ public class CityState {
     private int tick;
 
     // --- All placed buildings, kept in a flat list for easy iteration ---
+    // permette alta coesione permettendo ad altre classi di specialiizzarsi in un aspetto specifico lavorando solo con dati che riguardano quell'aspetto
+    // aumenta il low coupling permettendo alle altre classi di interagire solo con questa e non tra di loro, riducendo il rischio di bug e facilitando la manutenzione
+    // aumenta la modularity permettendo di aggiungere nuovi aspetti semplicemente creando una nuova lista e aggiornando i metodi addBuilding e removeBuilding senza dover modificare le altre classi che si occupano degli aspetti specifici facilitando l'estendibilità del progetto
     private final List<Infrastructure> buildings = new ArrayList<>();
     private final List<HasHousing> housings = new ArrayList<>();
     private final List<HasIncome> incomes = new ArrayList<>();

@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 /**
  * OBSERVER PATTERN: implements CityObserver to receive updates after each tick.
@@ -90,9 +91,16 @@ public class MainController implements Initializable, CityObserver {
     }
 
     private Pane createCellPane(int row, int col) {
-        Pane pane = new Pane();
+        StackPane pane = new StackPane();
         pane.setPrefSize(CELL_SIZE, CELL_SIZE);
         pane.setStyle(getCellStyle(row, col));
+
+        // pollution value label (centered)
+        Label pollutionLabel = new Label();
+        pollutionLabel.setId("pollutionLabel");
+        pollutionLabel.setStyle("-fx-text-fill: white; -fx-font-size:10; -fx-font-weight:bold;");
+        pollutionLabel.setMouseTransparent(true);
+        pane.getChildren().add(pollutionLabel);
 
         // Tooltip showing cell info
         Tooltip tip = new Tooltip();
@@ -278,6 +286,19 @@ public class MainController implements Initializable, CityObserver {
             if (row == null || col == null) continue;
             if (node instanceof Pane pane) {
                 pane.setStyle(getCellStyle(row, col));
+                // update pollution label if present
+                Cell cell = cityState.getCell(row, col);
+                for (javafx.scene.Node child : pane.getChildren()) {
+                    if (child instanceof Label lbl && "pollutionLabel".equals(lbl.getId())) {
+                        if (currentVision == VisionMode.POLLUTION) {
+                            lbl.setText(String.valueOf(cell.getPollution()));
+                            lbl.setVisible(true);
+                        } else {
+                            lbl.setText("");
+                            lbl.setVisible(false);
+                        }
+                    }
+                }
             }
         }
     }

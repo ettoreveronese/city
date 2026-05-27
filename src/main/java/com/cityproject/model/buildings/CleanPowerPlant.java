@@ -43,8 +43,6 @@ public class CleanPowerPlant extends PowerPlant implements HasMaintenance {
 
     @Override
     public void applyEffects(CityState city) {
-        if (!isActive()) return;
-        // Clean plants have no negative side effects — energy is handled by SimulationEngine
     }
 
     public Type getType() { return type; }

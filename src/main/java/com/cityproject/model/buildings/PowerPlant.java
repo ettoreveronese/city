@@ -16,6 +16,7 @@ public abstract class PowerPlant extends Infrastructure implements HasEnergy {
         super(id, x, y, buildCost);
         this.energyProduced = energyProduced;
     }
+    
 
     @Override
     public int getEnergyProduced() { return energyProduced; }

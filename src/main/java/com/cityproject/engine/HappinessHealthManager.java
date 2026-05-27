@@ -22,7 +22,7 @@ public class HappinessHealthManager {
             for (int j = 0; j < city.getCols(); j++)
                 city.getCell(i, j).setFireProtection(false);
 
-        // Apply all building effects (residences update local happiness/health, etc.)
+        
         for (Infrastructure b : city.getBuildings())
             b.applyEffects(city);
 
@@ -37,8 +37,8 @@ public class HappinessHealthManager {
             }
         }
         if (sumP > 0) {
-            city.setGlobalHappiness(sumPF / sumP);
-            city.setGlobalHealth(sumPS / sumP);
+            city.setGlobalHappiness(sumPF / sumP); // felicità globale è media pesata delle felicità locali
+            city.setGlobalHealth(sumPS / sumP);   // salute globale è media pesata delle salute locali
         }
     }
 }
