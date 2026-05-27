@@ -27,9 +27,9 @@ public class CleanPowerPlant extends PowerPlant implements HasMaintenance {
     }
     private static int getEnergy(Type t) {
         return switch (t) {
-            case SOLAR   -> 20;   // from bibbia: fotovoltaico 20
+            case SOLAR   -> 20;   
             case WIND    -> 30;
-            case NUCLEAR -> 250;  // from bibbia: nucleare 250
+            case NUCLEAR -> 250;  
         };
     }
     @Override
@@ -37,7 +37,7 @@ public class CleanPowerPlant extends PowerPlant implements HasMaintenance {
         return switch (type) {
             case SOLAR   -> 50;
             case WIND    -> 40;
-            case NUCLEAR -> 300;
+            case NUCLEAR -> 1000;
         };
     }
 
