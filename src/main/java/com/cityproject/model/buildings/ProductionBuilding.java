@@ -2,6 +2,7 @@ package com.cityproject.model.buildings;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
+import com.cityproject.model.aspects.HasEnergyConsumption;
 import com.cityproject.model.aspects.HasIncome;
 import com.cityproject.model.aspects.HasPollution;
 
@@ -9,7 +10,7 @@ import com.cityproject.model.aspects.HasPollution;
  * Industrial building. Generates income but spreads pollution.
  * FOOD = low pollution, METALLURGICAL = medium, PETROCHEMICAL = high.
  */
-public class ProductionBuilding extends Infrastructure implements HasIncome, HasPollution {
+public class ProductionBuilding extends Infrastructure implements HasIncome, HasPollution, HasEnergyConsumption {
 
     public enum Type { FOOD, METALLURGICAL, PETROCHEMICAL }
 

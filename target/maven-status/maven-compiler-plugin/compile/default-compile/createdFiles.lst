@@ -2,6 +2,7 @@ com\cityproject\model\aspects\HasIncome.class
 com\cityproject\model\buildings\ProductionBuilding.class
 com\cityproject\engine\EnergyBalanceManager.class
 com\cityproject\model\buildings\Road.class
+com\cityproject\engine\Helpers\AreaEffectHelper.class
 com\cityproject\model\aspects\HasPollution.class
 com\cityproject\model\buildings\ProductionBuilding$Type.class
 com\cityproject\model\Cell.class
@@ -9,13 +10,14 @@ com\cityproject\model\policy\IndustrialPolicy.class
 com\cityproject\engine\PollutionManager.class
 com\cityproject\model\buildings\NaturalArea.class
 com\cityproject\model\policy\CityPolicy.class
+com\cityproject\engine\Helpers\AreaEffectHelper$CellEffect.class
 com\cityproject\model\buildings\DirtyPowerPlant$Type.class
 com\cityproject\model\buildings\NaturalArea$Type.class
 com\cityproject\model\Infrastructure.class
 com\cityproject\model\buildings\HealthBuilding$Type.class
 com\cityproject\model\policy\GreenPolicy.class
+com\cityproject\engine\PopulationHappinessHealthManager.class
 com\cityproject\model\buildings\Residence$Type.class
-com\cityproject\engine\HappinessHealthManager.class
 com\cityproject\model\factory\BuildingFactory.class
 com\cityproject\presentation\MainController$VisionMode.class
 com\cityproject\model\buildings\FireStation.class
@@ -37,4 +39,3 @@ com\cityproject\presentation\App.class
 com\cityproject\engine\RoadConnectionManager.class
 com\cityproject\model\buildings\CleanPowerPlant$Type.class
 com\cityproject\model\buildings\Residence.class
-com\cityproject\model\Entity.class

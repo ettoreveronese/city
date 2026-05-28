@@ -2,6 +2,7 @@ package com.cityproject.model.buildings;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
+import com.cityproject.model.aspects.HasEnergyConsumption;
 import com.cityproject.model.aspects.HasMaintenance;
 
 /**
@@ -9,7 +10,7 @@ import com.cityproject.model.aspects.HasMaintenance;
  * Buildings are only active if connected to the root road via roads.
  * The root road (Strada-Radice) is indestructible and placed at map center.
  */
-public class Road extends Infrastructure implements HasMaintenance {
+public class Road extends Infrastructure implements HasMaintenance, HasEnergyConsumption {
 
     private final boolean isRoot; // true only for Strada-Radice
 

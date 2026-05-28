@@ -6,6 +6,7 @@ import com.cityproject.model.aspects.HasIncome;
 import com.cityproject.model.aspects.HasMaintenance;
 import com.cityproject.model.policy.CityPolicy;
 
+//^FINITO
 /**
  * Manages income and maintenance costs using the aspect lists.
  * Income from HasIncome buildings, maintenance costs from HasMaintenance buildings.
@@ -34,6 +35,7 @@ public class BudgetManager {
             }
         }
         city.setBudget(city.getBudget() + totalIncome);
+
 
         // Calculate total maintenance costs
         int totalMaintenance = 0;

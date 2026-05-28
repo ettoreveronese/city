@@ -42,8 +42,7 @@ public class CleanPowerPlant extends PowerPlant implements HasMaintenance {
     }
 
     @Override
-    public void applyEffects(CityState city) {
-    }
+    public void applyEffects(CityState city) {}
 
     public Type getType() { return type; }
 }

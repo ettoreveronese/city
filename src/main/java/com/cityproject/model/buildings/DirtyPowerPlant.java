@@ -54,10 +54,7 @@ public class DirtyPowerPlant extends PowerPlant implements HasPollution {
 
 
     @Override
-    public void applyEffects(CityState city) {
-        if (!isActive()) return;
-       
-    }
+    public void applyEffects(CityState city) {}
 
     public Type getType() { return type; }
 }

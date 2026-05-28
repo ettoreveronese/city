@@ -1,14 +1,14 @@
 package com.cityproject.model.buildings;
 
 import com.cityproject.model.Infrastructure;
-import com.cityproject.model.aspects.HasEnergy;
+import com.cityproject.model.aspects.HasEnergyProduction;
 
 /**
  * Abstract base for all power plants (clean and dirty).
  * GRASP High Cohesion: groups all energy-production logic in one place.
  * SimulationEngine can iterate List<PowerPlant> to compute total energy balance.
  */
-public abstract class PowerPlant extends Infrastructure implements HasEnergy {
+public abstract class PowerPlant extends Infrastructure implements HasEnergyProduction {
 
     private final int energyProduced;
 
@@ -21,7 +21,4 @@ public abstract class PowerPlant extends Infrastructure implements HasEnergy {
     @Override
     public int getEnergyProduced() { return energyProduced; }
 
-    // Power plants consume no energy — they produce it
-    @Override
-    public int getEnergyConsumption() { return 0; }
 }

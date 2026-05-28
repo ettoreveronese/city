@@ -3,10 +3,14 @@ package com.cityproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cityproject.model.aspects.HasEnergyConsumption;
+import com.cityproject.model.aspects.HasEnergyProduction;
 import com.cityproject.model.aspects.HasHousing;
 import com.cityproject.model.aspects.HasIncome;
 import com.cityproject.model.aspects.HasMaintenance;
 import com.cityproject.model.aspects.HasPollution;
+
+
 
 /**
  * The central data store of the entire simulation.
@@ -36,6 +40,9 @@ public class CityState {
     private final List<HasIncome> incomes = new ArrayList<>();
     private final List<HasMaintenance> mantainances = new ArrayList<>();
     private final List<HasPollution> pollutions = new ArrayList<>();
+    private final List<HasEnergyConsumption> energyConsumptions = new ArrayList<>();
+    private final List<HasEnergyProduction> energyProductions = new ArrayList<>();
+
 
     // --- Observer Pattern: list of observers notified on every state change ---
     private final List<CityObserver> observers = new ArrayList<>();
@@ -71,12 +78,18 @@ public class CityState {
     public boolean isValid(int x, int y)    { return x >= 0 && x < rows && y >= 0 && y < cols; }
 
     // --- Building management ---
-    public void addBuilding(Infrastructure b){
-        buildings.add(b);
+    /*High Cohesion
+        Queste liste permettono ai manager di lavorare solo con i dati rilevanti per il loro aspetto specifico
+
+    */
+    public void addBuilding(Infrastructure b){buildings.add(b);
         if (b instanceof HasHousing h) housings.add(h);
         if (b instanceof HasIncome i) incomes.add(i);
         if (b instanceof HasMaintenance m) mantainances.add(m);
         if (b instanceof HasPollution p) pollutions.add(p);
+        if (b instanceof HasEnergyConsumption e) energyConsumptions.add(e);
+        if (b instanceof HasEnergyProduction e) energyProductions.add(e);
+
         //stampo tutte le liste per vedere se funziona
         System.out.println("Buildings: " + buildings.size());
         System.out.println("Housings: " + housings.size());
@@ -91,18 +104,24 @@ public class CityState {
         if (b instanceof HasIncome i) incomes.remove(i);
         if (b instanceof HasMaintenance m) mantainances.remove(m);
         if (b instanceof HasPollution p) pollutions.remove(p);
+        if (b instanceof HasEnergyConsumption e) energyConsumptions.remove(e);
+        if (b instanceof HasEnergyProduction e) energyProductions.remove(e);
         //stampo tutte le liste per vedere se funziona
         System.out.println("Buildings: " + buildings.size());
         System.out.println("Housings: " + housings.size());
         System.out.println("Incomes: " + incomes.size());
         System.out.println("Maintenance: " + mantainances.size());
         System.out.println("Pollutions: " + pollutions.size()+ "\n");
+        System.out.println("EnergyConsumptions: " + energyConsumptions.size());
+        System.out.println("EnergyProductions: " + energyProductions.size());
     }
     public List<Infrastructure> getBuildings()   { return buildings; }
     public List<HasHousing> getHousing()   { return housings; }
     public List<HasIncome> getIncomes()   { return incomes; }
     public List<HasMaintenance> getMaintenance()   { return mantainances; }
     public List<HasPollution> getPollutions()   { return pollutions; }
+    public List<HasEnergyConsumption> getEnergyConsumptions()   { return energyConsumptions; }
+    public List<HasEnergyProduction> getEnergyProductions()   { return energyProductions; }
 
     // --- Getters and setters ---
     public int getRows()            { return rows; }

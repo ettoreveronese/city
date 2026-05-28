@@ -22,12 +22,6 @@ public abstract class Infrastructure {
     }
 
     /**
-     * How much energy this building consumes per tick.
-     * Used by SimulationEngine to compute energy balance.
-     */
-    public abstract int getEnergyConsumption();
-
-    /**
      * Apply this building's effects to the city state each tick.
      * Called by SimulationEngine during the tick cycle.
      */

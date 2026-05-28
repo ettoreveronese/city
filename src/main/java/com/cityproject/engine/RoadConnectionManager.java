@@ -8,7 +8,7 @@ import java.util.Set;
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
 import com.cityproject.model.buildings.Road;
-
+//^FINITO
 /**
  * Handles Road Connection Verification (VCS algorithm).
  * Buildings are active only if connected to the root road via roads.

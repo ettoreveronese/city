@@ -2,12 +2,13 @@ package com.cityproject.model.buildings;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
+import com.cityproject.model.aspects.HasEnergyConsumption;
 import com.cityproject.model.aspects.HasMaintenance;
 
 /**
  * Sanitary building. Increases global health each tick.
  */
-public class HealthBuilding extends Infrastructure implements HasMaintenance {
+public class HealthBuilding extends Infrastructure implements HasMaintenance, HasEnergyConsumption {
 
     public enum Type { CLINIC, HOSPITAL }
 

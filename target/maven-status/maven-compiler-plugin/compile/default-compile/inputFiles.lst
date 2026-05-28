@@ -1,8 +1,9 @@
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\BudgetManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EnergyBalanceManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EventManager.java
-C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\HappinessHealthManager.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\Helpers\AreaEffectHelper.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\PollutionManager.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\PopulationHappinessHealthManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\RoadConnectionManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\SimulationEngine.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\aspects\HasEnergy.java
@@ -23,7 +24,6 @@ C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\buildings\Road.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\Cell.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\CityObserver.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\CityState.java
-C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\Entity.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\factory\BuildingFactory.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\Infrastructure.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\policy\CityPolicy.java

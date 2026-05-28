@@ -2,6 +2,7 @@ package com.cityproject.model.buildings;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
+import com.cityproject.model.aspects.HasEnergyConsumption;
 import com.cityproject.model.aspects.HasMaintenance;
 import com.cityproject.model.aspects.HasPollution;
 
@@ -9,7 +10,7 @@ import com.cityproject.model.aspects.HasPollution;
  * Parks and natural reserves. Reduce pollution in nearby cells
  * and increase global happiness.
  */
-public class NaturalArea extends Infrastructure implements HasMaintenance, HasPollution {
+public class NaturalArea extends Infrastructure implements HasMaintenance, HasPollution, HasEnergyConsumption {
 
     public enum Type { PARK, NATURE_RESERVE, NATIONAL_PARK }
 
