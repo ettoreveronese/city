@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+// Main application class that launches the JavaFX application and loads the main view.
 public class App extends Application {
 
     @Override
