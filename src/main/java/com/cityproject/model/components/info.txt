@@ -1,0 +1,10 @@
+Nel nostro caso abbiamo usato il principio della Composizione (Composition over Inheritance) tramite 
+l'architettura ECS (Entity-Component-System). Abbiamo cioè una classe Infrastructure (l'Entità) 
+che "è composta" da vari Component indipendenti (es. HealthComponent, PollutionComponent), 
+permettendo di mixare le funzionalità senza ereditarietà multipla o gerarchie enormi.
+
+Il Composite Pattern vero e proprio, invece, serve per trattare oggetti singoli e gruppi di oggetti in modo identico, 
+creando strutture ad albero (immagina una classe base Elemento che può essere o un EdificioSingolo oppure un Distretto 
+che a sua volta contiene altri edifici, e chiamando onTick() sul distretto questo viene chiamato a cascata su tutti i figli). 
+Dato che nel nostro gioco gli edifici sono entità singole posizionate su una griglia piatta e non sono mai raggruppati 
+gerarchicamente ad albero, il pattern Composite non è stato necessario ed è stato evitato per mantenere la struttura snella e focalizzata.

@@ -21,6 +21,7 @@ public class SimulationEngine {
     }
 
     /** Swap the active policy at runtime — Strategy Pattern in action */
+    // Context
     public void setPolicy(CityPolicy policy) { this.activePolicy = policy; }
     public CityPolicy getActivePolicy()       { return activePolicy; }
 
@@ -42,6 +43,7 @@ public class SimulationEngine {
         EnergyBalanceManager ebManager = new EnergyBalanceManager(city);
         PollutionManager pManager = new PollutionManager(city, activePolicy);
         HealthAndFireProtectionManager hfManager = new HealthAndFireProtectionManager(city);
+        EntertainmentManager entManager = new EntertainmentManager(city);
         PopulationHappinessHealthManager hhManager = new PopulationHappinessHealthManager(city);
         BudgetManager bManager = new BudgetManager(city, activePolicy);
         EventManager eManager = new EventManager(city);
@@ -50,6 +52,7 @@ public class SimulationEngine {
         ebManager.balanceEnergy();
         pManager.applyPollution();
         hfManager.applyHealthAndFireProtectionEffects();
+        entManager.applyEntertainment();
         hhManager.applyPopulationHappinessHealth();
         bManager.processIncomeAndMaintenance();
         eManager.processEvents();

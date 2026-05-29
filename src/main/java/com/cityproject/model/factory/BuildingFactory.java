@@ -1,67 +1,136 @@
 package com.cityproject.model.factory;
 
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import com.cityproject.model.Infrastructure;
-import com.cityproject.model.buildings.CleanPowerPlant;
-import com.cityproject.model.buildings.DirtyPowerPlant;
-import com.cityproject.model.buildings.FireStation;
-import com.cityproject.model.buildings.HealthBuilding;
-import com.cityproject.model.buildings.NaturalArea;
-import com.cityproject.model.buildings.ProductionBuilding;
-import com.cityproject.model.buildings.Residence;
-import com.cityproject.model.buildings.Road;
+import com.cityproject.model.components.Component;
+import com.cityproject.model.components.EnergyComponent;
+import com.cityproject.model.components.FireCoverageComponent;
+import com.cityproject.model.components.HealthComponent;
+import com.cityproject.model.components.HousingComponent;
+import com.cityproject.model.components.IncomeComponent;
+import com.cityproject.model.components.MaintenanceComponent;
+import com.cityproject.model.components.PollutionComponent;
+import com.cityproject.model.components.EntertainmentComponent;
+import com.cityproject.model.type.BuildingType;
+import com.cityproject.model.type.BuildingTypeConfig;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
- * FACTORY PATTERN.
- * The only place in the codebase where concrete building classes are instantiated.
- * SimulationEngine and controllers never use "new XBuilding()" directly —
- * they always go through this factory.
- * This means: adding a new building type only requires changing this file.
+ * Factory che carica i dati dal JSON e costruisce le Infrastructure.
+ * Implementa il pattern Creator in ottica Data-Driven ECS.
+ * Pattern Factory
  */
 public class BuildingFactory {
 
-    private static int idCounter = 0;
+    private static BuildingFactory instance;
+    private final Map<String, BuildingType> registry = new HashMap<>();
 
-    /**
-     * Creates a building of the given type at position (x, y).
-     * @param type  string key, e.g. "COTTAGE", "COAL", "PARK"
-     * @param x     grid row
-     * @param y     grid column
-     * @return      the correct Infrastructure subclass instance
-     */
-    public static Infrastructure create(String type, int x, int y) {
-        String id = type.toUpperCase() + "_" + (idCounter++);
+    private BuildingFactory() {
+        loadTypesFromJson();
+    }
 
-        return switch (type.toUpperCase()) {
-            // Residences
-            case "COTTAGE"       -> new Residence(id, x, y, Residence.Type.COTTAGE);
-            case "CONDO"         -> new Residence(id, x, y, Residence.Type.CONDO);
-            case "SKYSCRAPER"    -> new Residence(id, x, y, Residence.Type.SKYSCRAPER);
-            // Production
-            case "FOOD"          -> new ProductionBuilding(id, x, y, ProductionBuilding.Type.FOOD);
-            case "METALLURGICAL" -> new ProductionBuilding(id, x, y, ProductionBuilding.Type.METALLURGICAL);
-            case "PETROCHEMICAL" -> new ProductionBuilding(id, x, y, ProductionBuilding.Type.PETROCHEMICAL);
-            // Clean power
-            case "SOLAR"         -> new CleanPowerPlant(id, x, y, CleanPowerPlant.Type.SOLAR);
-            case "WIND"          -> new CleanPowerPlant(id, x, y, CleanPowerPlant.Type.WIND);
-            case "NUCLEAR"       -> new CleanPowerPlant(id, x, y, CleanPowerPlant.Type.NUCLEAR);
-            // Dirty power
-            case "COAL"          -> new DirtyPowerPlant(id, x, y, DirtyPowerPlant.Type.COAL);
-            case "OIL"           -> new DirtyPowerPlant(id, x, y, DirtyPowerPlant.Type.OIL);
-            case "INCINERATOR"   -> new DirtyPowerPlant(id, x, y, DirtyPowerPlant.Type.INCINERATOR);
-            // Nature
-            case "PARK"          -> new NaturalArea(id, x, y, NaturalArea.Type.PARK);
-            case "RESERVE"       -> new NaturalArea(id, x, y, NaturalArea.Type.NATURE_RESERVE);
-            case "NATIONAL_PARK" -> new NaturalArea(id, x, y, NaturalArea.Type.NATIONAL_PARK);
-            // Health
-            case "CLINIC"        -> new HealthBuilding(id, x, y, HealthBuilding.Type.CLINIC);
-            case "HOSPITAL"      -> new HealthBuilding(id, x, y, HealthBuilding.Type.HOSPITAL);
-            // Fire
-            case "FIRE_STATION"  -> new FireStation(id, x, y);
-            // Roads
-            case "ROAD"          -> new Road(id, x, y, false);
-            case "ROOT_ROAD"     -> new Road(id, x, y, true);
+    public static BuildingFactory getInstance() {
+        if (instance == null) {
+            instance = new BuildingFactory();
+        }
+        return instance;
+    }
 
-            default -> throw new IllegalArgumentException("Unknown building type: " + type);
-        };
+    private void loadTypesFromJson() {
+        try {
+            Gson gson = new Gson();
+            Reader reader = new InputStreamReader(
+                getClass().getResourceAsStream("/buildings.json")
+            );
+
+            Type listType = new TypeToken<List<BuildingTypeConfig>>() {}.getType();
+            List<BuildingTypeConfig> configs = gson.fromJson(reader, listType);
+
+            for (BuildingTypeConfig config : configs) {
+                BuildingType type = new BuildingType(config.id, config.name, config.buildCost);
+                
+                // Convert config into base components
+                if (config.housingCapacity != null) {
+                    type.addBaseComponent(new HousingComponent(config.housingCapacity));
+                }
+                if (config.baseIncome != null) {
+                    type.addBaseComponent(new IncomeComponent(config.baseIncome));
+                }
+                if (config.energyConsumption != null || config.energyProduction != null) {
+                    int cons = config.energyConsumption != null ? config.energyConsumption : 0;
+                    int prod = config.energyProduction != null ? config.energyProduction : 0;
+                    type.addBaseComponent(new EnergyComponent(cons, prod));
+                }
+                if (config.maintenanceCost != null) {
+                    type.addBaseComponent(new MaintenanceComponent(config.maintenanceCost));
+                }
+                if (config.pollutionGenerated != null) {
+                    int rad = config.pollutionRadius != null ? config.pollutionRadius : 3;
+                    type.addBaseComponent(new PollutionComponent(config.pollutionGenerated, rad));
+                }
+                if (config.fireCoverageRadius != null) {
+                    type.addBaseComponent(new FireCoverageComponent(config.fireCoverageRadius));
+                }
+                if (config.healthCapacity != null) {
+                    type.addBaseComponent(new HealthComponent(config.healthCapacity));
+                }
+                if (config.happinessBoost != null) {
+                    int rad = config.entertainmentRadius != null ? config.entertainmentRadius : 3;
+                    type.addBaseComponent(new EntertainmentComponent(config.happinessBoost, rad));
+                }
+
+                registry.put(type.getId(), type);
+            }
+            reader.close();
+        } catch (Exception e) {
+            System.err.println("Failed to load buildings.json: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public BuildingType getBuildingType(String typeId) {
+        return registry.get(typeId);
+    }
+
+    public Infrastructure createBuilding(String typeId, int x, int y) {
+        BuildingType type = registry.get(typeId);
+        if (type == null) {
+            throw new IllegalArgumentException("Unknown building type: " + typeId);
+        }
+
+        // Create the entity
+        Infrastructure building = new Infrastructure(UUID.randomUUID().toString(), type, x, y);
+
+        // Copy components from type to entity
+        // We instantiate new ones to keep state separate per building
+        for (Component baseComp : type.getBaseComponents().values()) {
+            if (baseComp instanceof HousingComponent c) {
+                building.addComponent(new HousingComponent(c.getCapacity()));
+            } else if (baseComp instanceof IncomeComponent c) {
+                building.addComponent(new IncomeComponent(c.getBaseIncome()));
+            } else if (baseComp instanceof EnergyComponent c) {
+                building.addComponent(new EnergyComponent(c.getConsumption(), c.getProduction()));
+            } else if (baseComp instanceof MaintenanceComponent c) {
+                building.addComponent(new MaintenanceComponent(c.getMaintenanceCost()));
+            } else if (baseComp instanceof PollutionComponent c) {
+                building.addComponent(new PollutionComponent(c.getPollutionGenerated(), c.getRadius()));
+            } else if (baseComp instanceof FireCoverageComponent c) {
+                building.addComponent(new FireCoverageComponent(c.getRadius()));
+            } else if (baseComp instanceof HealthComponent c) {
+                building.addComponent(new HealthComponent(c.getCapacity()));
+            } else if (baseComp instanceof EntertainmentComponent c) {
+                building.addComponent(new EntertainmentComponent(c.getHappinessBoost(), c.getRadius()));
+            }
+        }
+
+        return building;
     }
 }

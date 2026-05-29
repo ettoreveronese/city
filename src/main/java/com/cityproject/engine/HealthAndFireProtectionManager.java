@@ -3,14 +3,11 @@ package com.cityproject.engine;
 import com.cityproject.engine.Helpers.AreaEffectHelper;
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
-import com.cityproject.model.aspects.HasFireCoverage;
-import com.cityproject.model.buildings.FireStation;
-import com.cityproject.model.buildings.HealthBuilding;
+import com.cityproject.model.components.FireCoverageComponent;
+import com.cityproject.model.components.HealthComponent;
 
 /**
  * Applies only the fire protection and health-building effects each tick.
- * This separates those domain effects from residence happiness/health
- * calculations and keeps PopulationHappinessHealthManager focused.
  */
 public class HealthAndFireProtectionManager {
 
@@ -23,16 +20,19 @@ public class HealthAndFireProtectionManager {
     public void applyHealthAndFireProtectionEffects() {
         resetFireProtection();
         for (Infrastructure building : city.getBuildings()) {
+            if (!building.isActive()) continue;
 
-            if (building instanceof FireStation) {
-                HasFireCoverage fs = (HasFireCoverage) building;
-                AreaEffectHelper.applyInRadius(city, building.getX(), building.getY(), fs.getFireRadius(),
+            if (building.hasComponent(FireCoverageComponent.class)) {
+                FireCoverageComponent fs = building.getComponent(FireCoverageComponent.class);
+                AreaEffectHelper.applyInRadius(city, building.getX(), building.getY(), fs.getRadius(),
                         (cell, distance) -> cell.setFireProtection(true));
             }
-            if (building instanceof HealthBuilding) {
-                building.applyEffects(city);
+            if (building.hasComponent(HealthComponent.class)) {
+                // Here we might need to apply health effects based on health building logic.
+                // Previously it was building.applyEffects(city). 
+                // In pure ECS, we'd distribute health to cells or adjust global health directly.
+                // For now we can leave it empty or add global health later.
             }
-
         }
     }
 

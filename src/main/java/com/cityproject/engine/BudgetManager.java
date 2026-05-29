@@ -2,14 +2,12 @@ package com.cityproject.engine;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
-import com.cityproject.model.aspects.HasIncome;
-import com.cityproject.model.aspects.HasMaintenance;
+import com.cityproject.model.components.IncomeComponent;
+import com.cityproject.model.components.MaintenanceComponent;
 import com.cityproject.model.policy.CityPolicy;
 
-//^FINITO
 /**
- * Manages income and maintenance costs using the aspect lists.
- * Income from HasIncome buildings, maintenance costs from HasMaintenance buildings.
+ * Manages income and maintenance costs using the component lists.
  */
 public class BudgetManager {
 
@@ -23,25 +21,24 @@ public class BudgetManager {
 
     public void processIncomeAndMaintenance() {
         // Tax income from active policy
-        city.setBudget(city.getBudget() + activePolicy.calculateTax(city)); //aggiunge soldi in base alla politica attiva e al numero di abitanti
-        activePolicy.applyPolicyEffects(city); //extra effectr from active policy //^per adesso disattivato
+        city.setBudget(city.getBudget() + activePolicy.calculateTax(city));
+        activePolicy.applyPolicyEffects(city);
 
         // Calculate total income from all active income buildings
         int totalIncome = 0;
-        for (HasIncome incomeBuilding : city.getIncomes()) {
-            Infrastructure b = (Infrastructure) incomeBuilding;
+        for (Infrastructure b : city.getIncomeBuildings()) {
             if (b.isActive()) {
-                totalIncome += incomeBuilding.getIncome();
+                IncomeComponent inc = b.getComponent(IncomeComponent.class);
+                totalIncome += inc.getBaseIncome();
             }
         }
         city.setBudget(city.getBudget() + totalIncome);
 
-
         // Calculate total maintenance costs
         int totalMaintenance = 0;
-        for (HasMaintenance maintBuilding : city.getMaintenance()) {
-            Infrastructure b = (Infrastructure) maintBuilding;
-            int cost = b.isActive() ? maintBuilding.getMaintenanceCost() : maintBuilding.getMaintenanceCost() * 2;
+        for (Infrastructure b : city.getMaintenanceBuildings()) {
+            MaintenanceComponent maint = b.getComponent(MaintenanceComponent.class);
+            int cost = b.isActive() ? maint.getMaintenanceCost() : maint.getMaintenanceCost() * 2;
             totalMaintenance += cost;
         }
         city.setBudget(city.getBudget() - totalMaintenance);

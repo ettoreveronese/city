@@ -8,10 +8,19 @@ import com.cityproject.model.Cell;
 import com.cityproject.model.CityObserver;
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
-import com.cityproject.model.buildings.Road;
 import com.cityproject.model.factory.BuildingFactory;
 import com.cityproject.model.policy.GreenPolicy;
 import com.cityproject.model.policy.IndustrialPolicy;
+import com.cityproject.model.type.BuildingType;
+import com.cityproject.model.components.Component;
+import com.cityproject.model.components.EnergyComponent;
+import com.cityproject.model.components.EntertainmentComponent;
+import com.cityproject.model.components.FireCoverageComponent;
+import com.cityproject.model.components.HealthComponent;
+import com.cityproject.model.components.HousingComponent;
+import com.cityproject.model.components.IncomeComponent;
+import com.cityproject.model.components.MaintenanceComponent;
+import com.cityproject.model.components.PollutionComponent;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,6 +32,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * OBSERVER PATTERN: implements CityObserver to receive updates after each tick.
@@ -34,9 +45,10 @@ public class MainController implements Initializable, CityObserver {
     @FXML private GridPane cityGrid;
     @FXML private Label tickLabel, budgetLabel, populationLabel;
     @FXML private Label happinessLabel, healthLabel, policyLabel;
-    @FXML private Label selectedLabel;
+    @FXML private Label selectedLabel, energyLabel;
     @FXML private TextArea eventLog;
-    @FXML private RadioButton visionNormal, visionPollution, visionFire;
+    @FXML private RadioButton visionNormal, visionPollution, visionFire, visionEntertainment;
+    @FXML private VBox controlsVBox;
 
     // --- Simulation state ---
     private CityState cityState;
@@ -49,7 +61,7 @@ public class MainController implements Initializable, CityObserver {
     private static final int GRID_COLS = 20;
 
     // --- Vision modes ---
-    public enum VisionMode { NORMAL, POLLUTION, FIRE }
+    public enum VisionMode { NORMAL, POLLUTION, FIRE, ENTERTAINMENT }
     private VisionMode currentVision = VisionMode.NORMAL;
 
     @Override
@@ -60,7 +72,7 @@ public class MainController implements Initializable, CityObserver {
         // 2. Place root road at center (bibbia: Strada-Radice always at center)
         int cx = GRID_ROWS / 2;
         int cy = GRID_COLS / 2;
-        Infrastructure rootRoad = BuildingFactory.create("ROOT_ROAD", cx, cy);
+        Infrastructure rootRoad = BuildingFactory.getInstance().createBuilding("ROOT_ROAD", cx, cy);
         cityState.addBuilding(rootRoad);
         cityState.getCell(cx, cy).setStructure(rootRoad);
 
@@ -75,6 +87,60 @@ public class MainController implements Initializable, CityObserver {
 
         // 6. Initial UI update
         updateStats();
+
+        // 7. Setup building tooltips
+        setupBuildingTooltips();
+    }
+
+    private void setupBuildingTooltips() {
+        for (javafx.scene.Node node : controlsVBox.getChildren()) {
+            if (node instanceof Button btn) {
+                String id = btn.getId();
+                if (id == null || id.equals("DELETE") || id.equals("tickButton")) continue;
+
+                BuildingType type = BuildingFactory.getInstance().getBuildingType(id);
+                if (type != null) {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(type.getName()).append("\n");
+                    sb.append("Build Cost: $").append(type.getBuildCost()).append("\n");
+                    
+                    java.util.Map<Class<? extends Component>, Component> comps = type.getBaseComponents();
+
+                    if (comps.containsKey(HousingComponent.class)) {
+                        sb.append("Housing: ").append(((HousingComponent)comps.get(HousingComponent.class)).getCapacity()).append("\n");
+                    }
+                    if (comps.containsKey(IncomeComponent.class)) {
+                        sb.append("Income: $").append(((IncomeComponent)comps.get(IncomeComponent.class)).getBaseIncome()).append("/tick\n");
+                    }
+                    if (comps.containsKey(MaintenanceComponent.class)) {
+                        sb.append("Maintenance: $").append(((MaintenanceComponent)comps.get(MaintenanceComponent.class)).getMaintenanceCost()).append("/tick\n");
+                    }
+                    if (comps.containsKey(EnergyComponent.class)) {
+                        EnergyComponent ec = (EnergyComponent)comps.get(EnergyComponent.class);
+                        if (ec.getProduction() > 0) sb.append("Energy Prod: ").append(ec.getProduction()).append("\n");
+                        if (ec.getConsumption() > 0) sb.append("Energy Cons: ").append(ec.getConsumption()).append("\n");
+                    }
+                    if (comps.containsKey(PollutionComponent.class)) {
+                        PollutionComponent pc = (PollutionComponent)comps.get(PollutionComponent.class);
+                        sb.append("Pollution: ").append(pc.getPollutionGenerated()).append(" (R: ").append(pc.getRadius()).append(")\n");
+                    }
+                    if (comps.containsKey(HealthComponent.class)) {
+                        sb.append("Health: ").append(((HealthComponent)comps.get(HealthComponent.class)).getCapacity()).append("\n");
+                    }
+                    if (comps.containsKey(FireCoverageComponent.class)) {
+                        sb.append("Fire Coverage: R: ").append(((FireCoverageComponent)comps.get(FireCoverageComponent.class)).getRadius()).append("\n");
+                    }
+                    if (comps.containsKey(EntertainmentComponent.class)) {
+                        EntertainmentComponent ec = (EntertainmentComponent)comps.get(EntertainmentComponent.class);
+                        sb.append("Entertainment: +").append(ec.getHappinessBoost()).append(" (R: ").append(ec.getRadius()).append(")\n");
+                    }
+                    
+                    Tooltip tip = new Tooltip(sb.toString().trim());
+                    tip.setShowDelay(Duration.millis(200));
+                    Tooltip.install(btn, tip);
+                }
+            }
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -139,22 +205,33 @@ public class MainController implements Initializable, CityObserver {
             return cell.hasFireProtection() ? "#166534" : "#13131f";
         }
 
+        // Vision mode: entertainment
+        if (currentVision == VisionMode.ENTERTAINMENT) {
+            int e = cell.getEntertainmentBonus();
+            if (e == 0)   return "#13131f";
+            if (e < 20)   return "#581c87"; // dark purple
+            if (e < 50)   return "#7e22ce"; // medium purple
+            if (e < 100)  return "#a855f7"; // bright purple
+            return "#d8b4fe"; // light purple
+        }
+
         // Normal mode: color by building type
         if (cell.isEmpty()) return "#13131f";
 
         Infrastructure s = cell.getStructure();
         if (!s.isActive()) return "#374151"; // inactive = gray
 
-        return switch (s.getClass().getSimpleName()) {
-            case "Road"               -> "#6b7280";
-            case "Residence"          -> "#166534";
-            case "ProductionBuilding" -> "#92400e";
-            case "CleanPowerPlant"    -> "#1e40af";
-            case "DirtyPowerPlant"    -> "#7f1d1d";
-            case "NaturalArea"        -> "#14532d";
-            case "HealthBuilding"     -> "#1e3a8a";
-            case "FireStation"        -> "#991b1b";
-            default                   -> "#4b5563";
+        return switch (s.getType().getId()) {
+            case "ROAD", "ROOT_ROAD" -> "#6b7280";
+            case "COTTAGE", "CONDO", "SKYSCRAPER" -> "#166534";
+            case "FOOD", "METALLURGICAL", "PETROCHEMICAL" -> "#92400e";
+            case "WIND", "SOLAR", "NUCLEAR" -> "#1e40af";
+            case "COAL", "INCINERATOR", "OIL" -> "#7f1d1d";
+            case "PARK", "NATURAL_RESERVE", "NATIONAL_PARK" -> "#14532d";
+            case "CLINIC", "HOSPITAL" -> "#1e3a8a";
+            case "FIRE_STATION" -> "#991b1b";
+            case "CINEMA", "AMUSEMENT_PARK" -> "#9333ea";
+            default -> "#4b5563";
         };
     }
 
@@ -182,7 +259,7 @@ public class MainController implements Initializable, CityObserver {
                 return;
             }
             Infrastructure s = cell.getStructure();
-            if (s instanceof Road r && r.isRoot()) {
+            if (s != null && s.getType() != null && "ROOT_ROAD".equals(s.getType().getId())) {
                 log("Cannot delete the root road!");
                 return;
             }
@@ -202,14 +279,14 @@ public class MainController implements Initializable, CityObserver {
         }
 
         // Check budget
-        Infrastructure preview = BuildingFactory.create(selectedBuildingType, row, col);
-        if (cityState.getBudget() < preview.getBuildCost()) {
+        Infrastructure preview = BuildingFactory.getInstance().createBuilding(selectedBuildingType, row, col);
+        if (cityState.getBudget() < preview.getType().getBuildCost()) {
             log("Not enough budget to build " + selectedBuildingType + "!");
             return;
         }
 
         // Place building
-        cityState.setBudget(cityState.getBudget() - preview.getBuildCost());
+        cityState.setBudget(cityState.getBudget() - preview.getType().getBuildCost());
         cityState.addBuilding(preview);
         cell.setStructure(preview);
 
@@ -254,6 +331,7 @@ public class MainController implements Initializable, CityObserver {
     private void handleVisionChange() {
         if (visionPollution.isSelected()) currentVision = VisionMode.POLLUTION;
         else if (visionFire.isSelected()) currentVision = VisionMode.FIRE;
+        else if (visionEntertainment.isSelected()) currentVision = VisionMode.ENTERTAINMENT;
         else currentVision = VisionMode.NORMAL;
         refreshGrid();
     }
@@ -277,6 +355,7 @@ public class MainController implements Initializable, CityObserver {
         happinessLabel.setText(String.format("%.1f%%", cityState.getGlobalHappiness()));
         healthLabel.setText(String.format("%.1f%%", cityState.getGlobalHealth()));
         policyLabel.setText(engine.getActivePolicy().getName());
+        energyLabel.setText(cityState.getTotalEnergyProduced() + "/" + cityState.getTotalEnergyConsumed());
     }
 
     private void refreshGrid() {

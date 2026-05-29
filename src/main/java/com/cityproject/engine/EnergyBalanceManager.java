@@ -6,15 +6,11 @@ import java.util.List;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
-import com.cityproject.model.aspects.HasEnergyConsumption;
-import com.cityproject.model.aspects.HasEnergyProduction;
-import com.cityproject.model.buildings.Road;
-//^Fatto
-
+import com.cityproject.model.components.EnergyComponent;
 
 /**
  * Manages energy production, consumption, and balancing.
- * If deficit: randomly deactivate non-road buildings until balanced.
+ * If deficit: randomly deactivate buildings until balanced.
  */
 public class EnergyBalanceManager {
 
@@ -28,18 +24,12 @@ public class EnergyBalanceManager {
         int totalProduced = 0;
         int totalConsumed = 0;
 
-        // Sum produced from dedicated producers list
-        for (HasEnergyProduction p : city.getEnergyProductions()) {
-            Infrastructure infra = (Infrastructure) p;
+        // Sum produced and consumed
+        for (Infrastructure infra : city.getEnergyBuildings()) {
             if (!infra.isActive()) continue;
-            totalProduced += p.getEnergyProduced();
-        }
-
-        // Sum consumed from dedicated consumers list
-        for (HasEnergyConsumption c : city.getEnergyConsumptions()) {
-            Infrastructure infra = (Infrastructure) c;
-            if (!infra.isActive()) continue;
-            totalConsumed += c.getEnergyConsumption();
+            EnergyComponent ec = infra.getComponent(EnergyComponent.class);
+            totalProduced += ec.getProduction();
+            totalConsumed += ec.getConsumption();
         }
 
         // If deficit: randomly deactivate non-road buildings until balanced
@@ -47,22 +37,30 @@ public class EnergyBalanceManager {
             int deficit = totalConsumed - totalProduced;
             List<Infrastructure> candidates = new ArrayList<>();
 
-            // FIltro le strutture che posso disattivare (non strade, non produttori) tra quelle che consumano energia
-            for (HasEnergyConsumption c : city.getEnergyConsumptions()) {
-                Infrastructure infra = (Infrastructure) c;
+            for (Infrastructure infra : city.getEnergyBuildings()) {
                 if (!infra.isActive()) continue;
-                if (infra instanceof Road) continue;
-                if (infra instanceof HasEnergyProduction) continue; // don't deactivate producers
-                candidates.add(infra);
+                // Strade let's assume they don't consume energy or are identified by type. 
+                // For now just skip if it produces energy.
+                EnergyComponent ec = infra.getComponent(EnergyComponent.class);
+                if (ec.getProduction() > 0) continue; // don't deactivate producers
+                if (ec.getConsumption() > 0) {
+                    // Check if it's a road (based on type name in the future, skipping the check for now as roads don't have energy components)
+                    if (infra.getType() != null && "ROAD".equals(infra.getType().getId())) continue;
+                    if (infra.getType() != null && "ROOT_ROAD".equals(infra.getType().getId())) continue;
+                    candidates.add(infra);
+                }
             }
 
-            //Mescolo la lista per randomizzare l'ordine di disattivazione
             Collections.shuffle(candidates);
             for (Infrastructure infra : candidates) {
                 if (deficit <= 0) break;
-                deficit -= ((HasEnergyConsumption) infra).getEnergyConsumption();
+                deficit -= infra.getComponent(EnergyComponent.class).getConsumption();
                 infra.setActive(false);
+                totalConsumed -= infra.getComponent(EnergyComponent.class).getConsumption(); // update consumed after deactivation
             }
         }
+        
+        city.setTotalEnergyProduced(totalProduced);
+        city.setTotalEnergyConsumed(totalConsumed);
     }
 }

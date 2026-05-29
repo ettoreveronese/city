@@ -2,16 +2,10 @@ package com.cityproject.engine;
 
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
-import com.cityproject.model.aspects.HasHousing;
-import com.cityproject.model.buildings.Residence;
+import com.cityproject.model.components.HousingComponent;
 
 /**
  * Manages local/global happiness, health AND population each tick.
- * All three metrics derive from residences, so they live here together (GRASP High Cohesion).
- *
- * LOCAL happiness/health: computed per residence based on cell pollution.
- * GLOBAL happiness/health: weighted average over all residences (bibbia formula).
- * POPULATION: recomputed from scratch each tick — no accumulation bug.
  */
 public class PopulationHappinessHealthManager {
 
@@ -27,51 +21,49 @@ public class PopulationHappinessHealthManager {
     }
 
     public void applyPopulationHappinessHealth() {
-        updateLocalValues();       // happiness + health per residence
-        updatePopulation();        // population from housing list
-        updateGlobalValues();      // weighted averages
+        updateLocalValues();
+        updatePopulation();
+        updateGlobalValues();
     }
 
     private void updateLocalValues() {
-        for (Infrastructure b : city.getBuildings()) {
-            if (!(b instanceof Residence r)) continue;
+        for (Infrastructure b : city.getHousingBuildings()) {
+            HousingComponent r = b.getComponent(HousingComponent.class);
 
-            if (!r.isActive()) {
-                // Bibbia: deactivated residence → happiness=0, health halved
+            if (!b.isActive()) {
                 r.setLocalHappiness(0);
                 r.setLocalHealth(r.getLocalHealth() / 2.0);
                 continue;
             }
 
-            // Start from base values each tick — avoids infinite decay
             double happiness = BASE_HAPPINESS;
             double health    = BASE_HEALTH;
 
-            // Penalty from pollution in this cell
-            int pollution = city.getCell(r.getX(), r.getY()).getPollution();
+            int pollution = city.getCell(b.getX(), b.getY()).getPollution();
             happiness -= pollution * POLLUTION_HAPPINESS_PENALTY;
             health    -= pollution * POLLUTION_HEALTH_PENALTY;
+            
+            int entertainment = city.getCell(b.getX(), b.getY()).getEntertainmentBonus();
+            happiness += entertainment;
 
             r.setLocalHappiness(happiness);
             r.setLocalHealth(health);
         }
     }
 
-    //Gestione popolazione: ogni tick si ricomputa da zero in base alla capacità totale delle residenze attive, così non c'è rischio di bug di accumulo o decremento infinito.
     private void updatePopulation() {
         int total = 0;
-        for (HasHousing h : city.getHousing()) {
-            Infrastructure b = (Infrastructure) h;
+        for (Infrastructure b : city.getHousingBuildings()) {
+            HousingComponent h = b.getComponent(HousingComponent.class);
             if (b.isActive()) total += h.getCapacity();
         }
         city.setPopulation(total);
     }
 
     private void updateGlobalValues() {
-        // Bibbia formula: Σ(capacity_i * value_i) / Σ(capacity_i)
         double sumPH = 0, sumPS = 0, sumP = 0;
-        for (Infrastructure b : city.getBuildings()) {
-            if (!(b instanceof Residence r)) continue;
+        for (Infrastructure b : city.getHousingBuildings()) {
+            HousingComponent r = b.getComponent(HousingComponent.class);
             sumPH += (double) r.getCapacity() * r.getLocalHappiness();
             sumPS += (double) r.getCapacity() * r.getLocalHealth();
             sumP  += r.getCapacity();
