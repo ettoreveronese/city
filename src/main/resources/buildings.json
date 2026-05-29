@@ -1,0 +1,178 @@
+[
+  {
+    "id": "ROOT_ROAD",
+    "name": "Strada Radice",
+    "buildCost": 0
+  },
+  {
+    "id": "ROAD",
+    "name": "Strada",
+    "buildCost": 5
+  },
+
+  {
+  "_COMMENT": "RESIDENZE"
+  },
+  {
+    "id": "COTTAGE",
+    "name": "Cottage",
+    "buildCost": 20,
+    "housingCapacity": 10
+  },
+  {
+    "id": "CONDO",
+    "name": "Condominio",
+    "buildCost": 50,
+    "housingCapacity": 50
+  },
+  {
+    "id": "SKYSCRAPER",
+    "name": "Grattacielo",
+    "buildCost": 200,
+    "housingCapacity": 200,
+    "energyConsumption": 50
+  },
+
+  {
+  "_COMMENT": "INDUSTRIE"
+  },
+  {
+    "id": "FOOD",
+    "name": "Industria Alimentare",
+    "buildCost": 50,
+    "baseIncome": 20,
+    "energyConsumption": 10,
+    "pollutionGenerated": 5,
+    "pollutionRadius": 2
+  },
+  {
+    "id": "METALLURGICAL",
+    "name": "Industria Metallurgica",
+    "buildCost": 100,
+    "baseIncome": 50,
+    "energyConsumption": 30,
+    "pollutionGenerated": 25,
+    "pollutionRadius": 4
+  },
+  {
+    "id": "PETROCHEMICAL",
+    "name": "Industria Petrolchimica",
+    "buildCost": 200,
+    "baseIncome": 100,
+    "energyConsumption": 50,
+    "pollutionGenerated": 50,
+    "pollutionRadius": 6
+  },
+
+  {
+  "_COMMENT": "CENTRALI ENERGETICHE"
+  },
+  {
+    "id": "WIND",
+    "name": "Centrale Eolica",
+    "buildCost": 150,
+    "energyProduction": 20,
+    "maintenanceCost": 2
+  },
+  {
+    "id": "SOLAR",
+    "name": "Centrale Solare",
+    "buildCost": 150,
+    "energyProduction": 30,
+    "maintenanceCost": 5
+  },
+  {
+    "id": "NUCLEAR",
+    "name": "Centrale Nucleare",
+    "buildCost": 1000,
+    "energyProduction": 500,
+    "maintenanceCost": 50
+  },
+  {
+    "id": "INCINERATOR",
+    "name": "Inceneritore",
+    "buildCost": 200,
+    "energyProduction": 80,
+    "maintenanceCost": 15,
+    "pollutionGenerated": 80,
+    "pollutionRadius": 6
+  },
+  {
+    "id": "OIL",
+    "name": "Centrale a Petrolio",
+    "buildCost": 300,
+    "energyProduction": 200,
+    "maintenanceCost": 30,
+    "pollutionGenerated": 100,
+    "pollutionRadius": 8
+  },
+  {
+    "id": "COAL",
+    "name": "Centrale a Carbone",
+    "buildCost": 200,
+    "energyProduction": 100,
+    "maintenanceCost": 20,
+    "pollutionGenerated": 50,
+    "pollutionRadius": 5
+  },
+  {
+    "id": "PARK",
+    "name": "Parco",
+    "buildCost": 30,
+    "maintenanceCost": 5,
+    "healthCapacity": 10
+  },
+  {
+    "id": "NATURAL_RESERVE",
+    "name": "Riserva Naturale",
+    "buildCost": 100,
+    "maintenanceCost": 15,
+    "healthCapacity": 30
+  },
+  {
+    "id": "NATIONAL_PARK",
+    "name": "Parco Nazionale",
+    "buildCost": 300,
+    "maintenanceCost": 40,
+    "healthCapacity": 100
+  },
+  {
+    "id": "CLINIC",
+    "name": "Ambulatorio",
+    "buildCost": 100,
+    "maintenanceCost": 10,
+    "healthCapacity": 30
+  },
+  {
+    "id": "HOSPITAL",
+    "name": "Ospedale",
+    "buildCost": 400,
+    "maintenanceCost": 40,
+    "healthCapacity": 100
+  },
+  {
+    "id": "FIRE_STATION",
+    "name": "Caserma Pompieri",
+    "buildCost": 300,
+    "maintenanceCost": 30,
+    "fireCoverageRadius": 8
+  },
+  {
+    "id": "CINEMA",
+    "name": "Cinema",
+    "buildCost": 150,
+    "maintenanceCost": 15,
+    "energyConsumption": 20,
+    "happinessBoost": 20,
+    "entertainmentRadius": 4
+  },
+  {
+    "id": "AMUSEMENT_PARK",
+    "name": "Parco Divertimenti",
+    "buildCost": 500,
+    "maintenanceCost": 50,
+    "energyConsumption": 80,
+    "happinessBoost": 50,
+    "entertainmentRadius": 8
+  }
+]

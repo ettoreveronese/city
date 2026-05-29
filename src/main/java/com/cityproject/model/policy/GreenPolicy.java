@@ -3,6 +3,7 @@ package com.cityproject.model.policy;
 import com.cityproject.model.CityState;
 
 /**
+ * Concrete Strategy
  * Green policy: lower taxes, lower pollution, higher happiness.
  */
 public class GreenPolicy implements CityPolicy {
@@ -17,7 +18,7 @@ public class GreenPolicy implements CityPolicy {
 
     @Override
     public double calculatePollutionModifier() {
-        return 0.5; // pollution is halved under this policy
+        return 0.7; // pollution under this policy
     }
 
     @Override

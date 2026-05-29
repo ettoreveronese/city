@@ -3,10 +3,9 @@ package com.cityproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cityproject.model.aspects.HasHousing;
-import com.cityproject.model.aspects.HasIncome;
-import com.cityproject.model.aspects.HasMaintenance;
-import com.cityproject.model.aspects.HasPollution;
+
+
+
 
 /**
  * The central data store of the entire simulation.
@@ -25,17 +24,17 @@ public class CityState {
     private int population;
     private double globalHappiness; // 0-100
     private double globalHealth;    // 0-100
+    private int totalEnergyProduced;
+    private int totalEnergyConsumed;
     private int tick;
 
     // --- All placed buildings, kept in a flat list for easy iteration ---
-    // permette alta coesione permettendo ad altre classi di specialiizzarsi in un aspetto specifico lavorando solo con dati che riguardano quell'aspetto
-    // aumenta il low coupling permettendo alle altre classi di interagire solo con questa e non tra di loro, riducendo il rischio di bug e facilitando la manutenzione
-    // aumenta la modularity permettendo di aggiungere nuovi aspetti semplicemente creando una nuova lista e aggiornando i metodi addBuilding e removeBuilding senza dover modificare le altre classi che si occupano degli aspetti specifici facilitando l'estendibilità del progetto
     private final List<Infrastructure> buildings = new ArrayList<>();
-    private final List<HasHousing> housings = new ArrayList<>();
-    private final List<HasIncome> incomes = new ArrayList<>();
-    private final List<HasMaintenance> mantainances = new ArrayList<>();
-    private final List<HasPollution> pollutions = new ArrayList<>();
+    private final List<Infrastructure> housingBuildings = new ArrayList<>();
+    private final List<Infrastructure> incomeBuildings = new ArrayList<>();
+    private final List<Infrastructure> maintenanceBuildings = new ArrayList<>();
+    private final List<Infrastructure> pollutionBuildings = new ArrayList<>();
+    private final List<Infrastructure> energyBuildings = new ArrayList<>();
 
     // --- Observer Pattern: list of observers notified on every state change ---
     private final List<CityObserver> observers = new ArrayList<>();
@@ -67,42 +66,33 @@ public class CityState {
 
     // --- Grid utilities ---
     public Cell getCell(int x, int y)       { return grid[x][y]; }
-    //verifica che sia dentro la mappa
     public boolean isValid(int x, int y)    { return x >= 0 && x < rows && y >= 0 && y < cols; }
 
     // --- Building management ---
-    public void addBuilding(Infrastructure b){
+    public void addBuilding(Infrastructure b) {
         buildings.add(b);
-        if (b instanceof HasHousing h) housings.add(h);
-        if (b instanceof HasIncome i) incomes.add(i);
-        if (b instanceof HasMaintenance m) mantainances.add(m);
-        if (b instanceof HasPollution p) pollutions.add(p);
-        //stampo tutte le liste per vedere se funziona
-        System.out.println("Buildings: " + buildings.size());
-        System.out.println("Housings: " + housings.size());
-        System.out.println("Incomes: " + incomes.size());
-        System.out.println("Maintenance: " + mantainances.size());
-        System.out.println("Pollutions: " + pollutions.size()+ "\n");
+        if (b.hasComponent(com.cityproject.model.components.HousingComponent.class)) housingBuildings.add(b);
+        if (b.hasComponent(com.cityproject.model.components.IncomeComponent.class)) incomeBuildings.add(b);
+        if (b.hasComponent(com.cityproject.model.components.MaintenanceComponent.class)) maintenanceBuildings.add(b);
+        if (b.hasComponent(com.cityproject.model.components.PollutionComponent.class)) pollutionBuildings.add(b);
+        if (b.hasComponent(com.cityproject.model.components.EnergyComponent.class)) energyBuildings.add(b);
     }
 
-    public void removeBuilding(Infrastructure b){
+    public void removeBuilding(Infrastructure b) {
         buildings.remove(b);
-        if (b instanceof HasHousing h) housings.remove(h);
-        if (b instanceof HasIncome i) incomes.remove(i);
-        if (b instanceof HasMaintenance m) mantainances.remove(m);
-        if (b instanceof HasPollution p) pollutions.remove(p);
-        //stampo tutte le liste per vedere se funziona
-        System.out.println("Buildings: " + buildings.size());
-        System.out.println("Housings: " + housings.size());
-        System.out.println("Incomes: " + incomes.size());
-        System.out.println("Maintenance: " + mantainances.size());
-        System.out.println("Pollutions: " + pollutions.size()+ "\n");
+        housingBuildings.remove(b);
+        incomeBuildings.remove(b);
+        maintenanceBuildings.remove(b);
+        pollutionBuildings.remove(b);
+        energyBuildings.remove(b);
     }
+
     public List<Infrastructure> getBuildings()   { return buildings; }
-    public List<HasHousing> getHousing()   { return housings; }
-    public List<HasIncome> getIncomes()   { return incomes; }
-    public List<HasMaintenance> getMaintenance()   { return mantainances; }
-    public List<HasPollution> getPollutions()   { return pollutions; }
+    public List<Infrastructure> getHousingBuildings()   { return housingBuildings; }
+    public List<Infrastructure> getIncomeBuildings()   { return incomeBuildings; }
+    public List<Infrastructure> getMaintenanceBuildings()   { return maintenanceBuildings; }
+    public List<Infrastructure> getPollutionBuildings()   { return pollutionBuildings; }
+    public List<Infrastructure> getEnergyBuildings()   { return energyBuildings; }
 
     // --- Getters and setters ---
     public int getRows()            { return rows; }
@@ -121,6 +111,12 @@ public class CityState {
     public double getGlobalHealth()             { return globalHealth; }
     public void setGlobalHealth(double h)       { this.globalHealth = Math.max(0, Math.min(100, h)); }
     
+    public int getTotalEnergyProduced() { return totalEnergyProduced; }
+    public void setTotalEnergyProduced(int totalEnergyProduced) { this.totalEnergyProduced = totalEnergyProduced; }
+
+    public int getTotalEnergyConsumed() { return totalEnergyConsumed; }
+    public void setTotalEnergyConsumed(int totalEnergyConsumed) { this.totalEnergyConsumed = totalEnergyConsumed; }
+
     public int getTick()            { return tick; }
     public void incrementTick()     { this.tick++; }
 }

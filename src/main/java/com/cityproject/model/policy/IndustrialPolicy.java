@@ -3,6 +3,7 @@ package com.cityproject.model.policy;
 import com.cityproject.model.CityState;
 
 /**
+ * Concrete Strategy
  * Industrial policy: higher taxes, higher pollution, lower happiness.
  */
 public class IndustrialPolicy implements CityPolicy {
