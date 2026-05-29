@@ -10,8 +10,8 @@ import com.cityproject.model.components.HousingComponent;
 public class PopulationHappinessHealthManager {
 
     private static final double BASE_HAPPINESS = 100.0;
-    private static final double POLLUTION_HAPPINESS_PENALTY = 1.0;
-    private static final double POLLUTION_HEALTH_PENALTY    = 0.5;
+    private static final double POLLUTION_HAPPINESS_PENALTY = 2.0;
+    private static final double POLLUTION_HEALTH_PENALTY    = 0.7;
 
     private final CityState city;
 

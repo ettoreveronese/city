@@ -7,6 +7,9 @@ C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EventManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\FireProtectionManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\HealthCapacityManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\Helpers\AreaEffectHelper.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\persistence\SavedBuildingDTO.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\persistence\SaveGameDTO.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\persistence\SaveManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\PollutionManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\PopulationHappinessHealthManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\RoadConnectionManager.java
@@ -35,4 +38,5 @@ C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\ControlsCont
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\GridController.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\LogController.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\MainController.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\StartController.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\StatsController.java

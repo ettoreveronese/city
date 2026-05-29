@@ -26,4 +26,9 @@
     <Label fx:id="energyLabel" text="0/0" style="-fx-text-fill:#fcd34d; -fx-font-weight:bold;"/>
     <Label text="Selected:" style="-fx-text-fill:#aaa;"/>
     <Label fx:id="selectedLabel" text="none" style="-fx-text-fill:#facc15; -fx-font-weight:bold;"/>
+
+    <Region HBox.hgrow="ALWAYS" />
+
+    <Button mnemonicParsing="false" onAction="#handleSaveGame" style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="Salva Partita" />
+    <Button mnemonicParsing="false" onAction="#handleExitToMenu" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" text="X" />
 </HBox>

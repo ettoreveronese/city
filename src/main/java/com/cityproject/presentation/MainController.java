@@ -1,5 +1,8 @@
 package com.cityproject.presentation;
 
+import com.cityproject.model.policy.IndustrialPolicy;
+import com.cityproject.model.policy.CityPolicy;
+import com.cityproject.model.policy.GreenPolicy;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -10,7 +13,6 @@ import com.cityproject.engine.config.ConfigManager;
 import com.cityproject.engine.config.GameConfig;
 import com.cityproject.model.Infrastructure;
 import com.cityproject.model.factory.BuildingFactory;
-import com.cityproject.model.policy.GreenPolicy;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -58,6 +60,38 @@ public class MainController implements Initializable, CityObserver {
         }
 
         // 6. Initial UI update
+        onCityUpdated(cityState);
+    }
+
+    // --- Loading existing city ---
+    public void loadExistingCity(CityState loadedCity, String policyName) {
+        // 1. Unregister from old city
+        if (this.cityState != null) {
+            this.cityState.removeObserver(this);
+        }
+
+        // 2. Set new city
+        this.cityState = loadedCity;
+
+        // 3. Create engine with loaded policy
+        // We'll map the policyName to the actual class
+        CityPolicy loadedPolicy = new GreenPolicy(); // Default
+        if ("IndustrialPolicy".equals(policyName)) loadedPolicy = new IndustrialPolicy();
+
+        this.engine = new SimulationEngine(cityState, loadedPolicy);
+
+        // 4. Register observer
+        this.cityState.addObserver(this);
+
+        // 5. Re-initialize sub-controllers
+        if (controlsViewController != null) {
+            controlsViewController.init(engine, this, cityState);
+        }
+        if (gridViewController != null) {
+            gridViewController.init(cityState, controlsViewController, this);
+        }
+
+        // 6. Update UI
         onCityUpdated(cityState);
     }
 

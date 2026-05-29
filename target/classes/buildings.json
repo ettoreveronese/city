@@ -1,5 +1,8 @@
 [
     {
+        "_COMMENT": "UNLOCK LEVEL: 0, 100, 300, 500, 1000, 1500"
+    },
+    {
         "id": "ROOT_ROAD", "isRoad": true,
         "name": "Strada Radice",
         "buildCost": 0,
@@ -25,18 +28,16 @@
         "baseIncome": 2,
         "unlockPopulation": 0,
         "emoji": "🏠"
-    },
-    {
+    },{
         "id": "CONDO",
         "name": "Condominio",
-        "buildCost": 280,
-        "housingCapacity": 50,
+        "buildCost": 380,
+        "housingCapacity": 35,
         "energyConsumption": 25,
         "baseIncome": 10,
         "unlockPopulation": 100,
         "emoji": "🏢"
-    },
-    {
+    },{
         "id": "SKYSCRAPER",
         "name": "Grattacielo",
         "buildCost": 3000,
@@ -45,56 +46,50 @@
         "baseIncome": 50,
         "unlockPopulation": 1000,
         "emoji": "🏙"
-    },
-    {
+    },{
         "_COMMENT": "INDUSTRIE"
-    },
-    {
+    },{
         "id": "FOOD",
         "name": "Industria Alimentare",
         "buildCost": 150,
-        "baseIncome": 20,
+        "baseIncome": 25,
         "energyConsumption": 15,
-        "pollutionGenerated": 10,
-        "pollutionRadius": 2,
+        "pollutionGenerated": 15,
+        "pollutionRadius": 4,
         "unlockPopulation": 20,
         "emoji": "🍞"
-    },
-    {
+    },{
         "id": "METALLURGICAL",
         "name": "Industria Metallurgica",
         "buildCost": 370,
         "baseIncome": 60,
         "energyConsumption": 37,
         "pollutionGenerated": 40,
-        "pollutionRadius": 4,
+        "pollutionRadius": 7,
         "unlockPopulation": 300,
         "emoji": "⚙"
-    },
-    {
+    },{
         "id": "PETROCHEMICAL",
         "name": "Industria Petrolchimica",
         "buildCost": 1500,
         "baseIncome": 150,
         "energyConsumption": 80,
         "pollutionGenerated": 100,
-        "pollutionRadius": 6,
+        "pollutionRadius": 12,
         "unlockPopulation": 1500,
         "emoji": "🛢"
     },
     {
         "_COMMENT": "CENTRALI ENERGETICHE"
-    },
-    {
+    },{
         "id": "WIND",
         "name": "Centrale Eolica",
         "buildCost": 100,
-        "energyProduction": 10,
+        "energyProduction": 15,
         "maintenanceCost": 5,
         "unlockPopulation": 0,
         "emoji": "🌀"
-    },
-    {
+    },{
         "id": "SOLAR",
         "name": "Centrale Solare",
         "buildCost": 250,
@@ -102,28 +97,25 @@
         "maintenanceCost": 20,
         "unlockPopulation": 100,
         "emoji": "☀️"
-    },
-    {
+    },{
         "id": "INCINERATOR",
         "name": "Inceneritore",
         "buildCost": 470,
         "energyProduction": 50,
         "pollutionGenerated": 50,
         "pollutionRadius": 4,
-        "unlockPopulation": 200,
+        "unlockPopulation": 50,
         "emoji": "🔥"
-    },
-    {
+    },{
         "id": "COAL",
         "name": "Centrale a Carbone",
         "buildCost": 1500,
         "energyProduction": 100,
         "pollutionGenerated": 80,
         "pollutionRadius": 5,
-        "unlockPopulation": 50,
+        "unlockPopulation": 500,
         "emoji": "🏭"
-    },
-    {
+    },{
         "id": "OIL",
         "name": "Centrale a Petrolio",
         "buildCost": 2800,
@@ -132,8 +124,7 @@
         "pollutionRadius": 7,
         "unlockPopulation": 500,
         "emoji": "🛢"
-    },
-    {
+    },{
         "id": "NUCLEAR",
         "name": "Centrale Nucleare",
         "buildCost": 10500,
@@ -150,22 +141,20 @@
         "name": "Parco",
         "buildCost": 150,
         "maintenanceCost": 55,
-        "pollutionGenerated": -12,
-        "pollutionRadius": 2,
-        "unlockPopulation": 0,
+        "pollutionGenerated": -17,
+        "pollutionRadius": 5,
+        "unlockPopulation": 100,
         "emoji": "🌳"
-    },
-    {
+    },{
         "id": "NATURAL_RESERVE",
         "name": "Riserva Naturale",
         "buildCost": 450,
         "maintenanceCost": 120,
         "pollutionGenerated": -25,
         "pollutionRadius": 5,
-        "unlockPopulation": 200,
+        "unlockPopulation": 300,
         "emoji": "🌲"
-    },
-    {
+    },{
         "id": "NATIONAL_PARK",
         "name": "Parco Nazionale",
         "buildCost": 1500,
@@ -177,8 +166,7 @@
     },
     {
         "_COMMENT": "SERVIZI PUBBLICI: SANITA E POMPIERI"
-    },
-    {
+    },{
         "id": "CLINIC",
         "name": "Ambulatorio",
         "buildCost": 700,
@@ -186,8 +174,7 @@
         "healthCapacity": 100,
         "unlockPopulation": 20,
         "emoji": "⚕"
-    },
-    {
+    },{
         "id": "HOSPITAL",
         "name": "Ospedale",
         "buildCost": 2400,
@@ -195,8 +182,7 @@
         "healthCapacity": 300,
         "unlockPopulation": 1000,
         "emoji": "🏥"
-    },
-    {
+    },{
         "id": "FIRE_STATION",
         "name": "Caserma Pompieri",
         "buildCost": 570,
@@ -218,8 +204,7 @@
         "entertainmentRadius": 4,
         "unlockPopulation": 300,
         "emoji": "🎬"
-    },
-    {
+    },{
         "id": "AMUSEMENT_PARK",
         "name": "Parco Divertimenti",
         "buildCost": 2600,

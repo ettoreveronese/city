@@ -125,6 +125,7 @@ public class CityState {
     public int getTotalHealthCapacity() { return totalHealthCapacity; }
     public void setTotalHealthCapacity(int totalHealthCapacity) { this.totalHealthCapacity = totalHealthCapacity; }
 
-    public int getTick()            { return tick; }
+    public int getTick() { return tick; }
+    public void setTick(int tick) { this.tick = tick; }
     public void incrementTick()     { this.tick++; }
 }
