@@ -4,11 +4,13 @@ package com.cityproject.model.type;
  * POJO per il parsing Gson del file buildings.json.
  */
 public class BuildingTypeConfig {
+    // Componenti comuni a tutte le tipologie di edificio
     public String id;
     public String name;
     public String emoji;
     public int buildCost;
     public Integer unlockPopulation;
+    public Boolean isRoad;
 
     // Component configurations (optional in json)
     public Integer housingCapacity;

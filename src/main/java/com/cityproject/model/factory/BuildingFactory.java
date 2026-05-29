@@ -62,6 +62,9 @@ public class BuildingFactory {
                 if (config.unlockPopulation != null) {
                     type.setUnlockPopulation(config.unlockPopulation);
                 }
+                if (config.isRoad != null) {
+                    type.setRoad(config.isRoad);
+                }
                 
                 // Convert config into base components
                 if (config.housingCapacity != null) {

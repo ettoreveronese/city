@@ -1,4 +1,4 @@
-package com.cityproject.model.config;
+package com.cityproject.engine.config;
 
 import com.google.gson.Gson;
 import java.io.InputStreamReader;
@@ -26,12 +26,20 @@ public class ConfigManager {
             currentConfig = gson.fromJson(reader, GameConfig.class);
             reader.close();
             if (currentConfig == null) {
-                currentConfig = new GameConfig(); // defaults
+                currentConfig = createDefaultConfig();
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Could not load config.json, using defaults.");
-            currentConfig = new GameConfig();
+            currentConfig = createDefaultConfig();
         }
+    }
+
+    private static GameConfig createDefaultConfig() {
+        GameConfig c = new GameConfig();
+        c.setGridRows(50);
+        c.setGridCols(50);
+        c.setStartingBudget(5000);
+        return c;
     }
 }

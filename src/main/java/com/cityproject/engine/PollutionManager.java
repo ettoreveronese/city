@@ -12,19 +12,38 @@ import com.cityproject.model.policy.CityPolicy;
 public class PollutionManager {
 
     private final CityState city;
-    private final CityPolicy activePolicy;
+    private CityPolicy activePolicy;
 
     private static final double ATTENUATION = 0.5;
+
+    private int[][] pollutionGrid;
+    private int gridRows = 0;
+    private int gridCols = 0;
 
     public PollutionManager(CityState city, CityPolicy activePolicy) {
         this.city = city;
         this.activePolicy = activePolicy;
     }
 
+    public void setActivePolicy(CityPolicy activePolicy) {
+        this.activePolicy = activePolicy;
+    }
+
     public void applyPollution() {
         int rows = city.getRows();
         int cols = city.getCols();
-        int[][] pollutionGrid = new int[rows][cols];
+        
+        // Reallocate only if dimensions change (e.g. first tick or grid resize)
+        if (pollutionGrid == null || rows != gridRows || cols != gridCols) {
+            pollutionGrid = new int[rows][cols];
+            gridRows = rows;
+            gridCols = cols;
+        } else {
+            // Clear existing grid
+            for (int i = 0; i < rows; i++) {
+                java.util.Arrays.fill(pollutionGrid[i], 0);
+            }
+        }
 
         double modifier = activePolicy.calculatePollutionModifier();
 

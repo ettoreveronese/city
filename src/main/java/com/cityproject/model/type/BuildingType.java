@@ -15,6 +15,7 @@ public class BuildingType {
     private String emoji;
     private int buildCost;
     private int unlockPopulation = 0; // Popolazione necessaria per sbloccare questo edificio
+    private boolean isRoad = false;
     
     // Configurazione iniziale dei componenti
     private Map<Class<? extends Component>, Component> baseComponents;
@@ -44,6 +45,9 @@ public class BuildingType {
 
     public int getUnlockPopulation() { return unlockPopulation; }
     public void setUnlockPopulation(int unlockPopulation) { this.unlockPopulation = unlockPopulation; }
+
+    public boolean isRoad() { return isRoad; }
+    public void setRoad(boolean isRoad) { this.isRoad = isRoad; }
 
     public void addBaseComponent(Component component) {
         this.baseComponents.put(component.getClass(), component);

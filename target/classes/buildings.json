@@ -1,13 +1,13 @@
-﻿[
+[
     {
-        "id": "ROOT_ROAD",
+        "id": "ROOT_ROAD", "isRoad": true,
         "name": "Strada Radice",
         "buildCost": 0,
         "unlockPopulation": 0,
         "emoji": "🛣"
     },
     {
-        "id": "ROAD",
+        "id": "ROAD", "isRoad": true,
         "name": "Strada",
         "buildCost": 5,
         "unlockPopulation": 0,

@@ -1,12 +1,12 @@
-package com.cityproject.model.config;
+package com.cityproject.engine.config;
 
 /**
  * Classe per il parsing del file config.json che contiene i parametri principali del gioco.
  */
 public class GameConfig {
-    private int gridRows = 50;
-    private int gridCols = 50;
-    private int startingBudget = 5000;
+    private int gridRows;
+    private int gridCols;
+    private int startingBudget;
 
     public int getGridRows() {
         return gridRows;

@@ -1,4 +1,6 @@
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\BudgetManager.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\config\ConfigManager.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\config\GameConfig.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EnergyBalanceManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EntertainmentManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EventManager.java
@@ -21,8 +23,6 @@ C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\components\HousingC
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\components\IncomeComponent.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\components\MaintenanceComponent.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\components\PollutionComponent.java
-C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\config\ConfigManager.java
-C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\config\GameConfig.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\factory\BuildingFactory.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\Infrastructure.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\policy\CityPolicy.java

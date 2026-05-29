@@ -15,14 +15,39 @@ public class SimulationEngine {
     private final CityState city;
     private CityPolicy activePolicy;
 
+    // Managers
+    private final RoadConnectionManager rcManager;
+    private final EnergyBalanceManager ebManager;
+    private final PollutionManager pManager;
+    private final HealthCapacityManager hcManager;
+    private final FireProtectionManager fpManager;
+    private final EntertainmentManager entManager;
+    private final PopulationHappinessHealthManager hhManager;
+    private final BudgetManager bManager;
+    private final EventManager eManager;
+
     public SimulationEngine(CityState city, CityPolicy initialPolicy) {
         this.city = city;
         this.activePolicy = initialPolicy;
+
+        this.rcManager = new RoadConnectionManager(city);
+        this.ebManager = new EnergyBalanceManager(city);
+        this.pManager = new PollutionManager(city, activePolicy);
+        this.hcManager = new HealthCapacityManager(city);
+        this.fpManager = new FireProtectionManager(city);
+        this.entManager = new EntertainmentManager(city);
+        this.hhManager = new PopulationHappinessHealthManager(city);
+        this.bManager = new BudgetManager(city, activePolicy);
+        this.eManager = new EventManager(city);
     }
 
     /** Swap the active policy at runtime — Strategy Pattern in action */
     // Context
-    public void setPolicy(CityPolicy policy) { this.activePolicy = policy; }
+    public void setPolicy(CityPolicy policy) { 
+        this.activePolicy = policy; 
+        this.pManager.setActivePolicy(policy);
+        this.bManager.setActivePolicy(policy);
+    }
     public CityPolicy getActivePolicy()       { return activePolicy; }
 
     /**
@@ -37,17 +62,6 @@ public class SimulationEngine {
      */
     public void tick() {
         city.incrementTick();
-
-        // delegate to managers
-        RoadConnectionManager rcManager = new RoadConnectionManager(city);
-        EnergyBalanceManager ebManager = new EnergyBalanceManager(city);
-        PollutionManager pManager = new PollutionManager(city, activePolicy);
-        HealthCapacityManager hcManager = new HealthCapacityManager(city);
-        FireProtectionManager fpManager = new FireProtectionManager(city);
-        EntertainmentManager entManager = new EntertainmentManager(city);
-        PopulationHappinessHealthManager hhManager = new PopulationHappinessHealthManager(city);
-        BudgetManager bManager = new BudgetManager(city, activePolicy);
-        EventManager eManager = new EventManager(city);
 
         rcManager.checkConnections();
         ebManager.balanceEnergy();
