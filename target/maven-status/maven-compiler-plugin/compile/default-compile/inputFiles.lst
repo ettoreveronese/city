@@ -29,4 +29,8 @@ C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\policy\IndustrialPo
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\type\BuildingType.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\model\type\BuildingTypeConfig.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\App.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\ControlsController.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\GridController.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\LogController.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\MainController.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\presentation\StatsController.java

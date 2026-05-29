@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.Group?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.cityproject.presentation.GridController"
+           style="-fx-background-color:#13131f;">
+    
+    <ScrollPane fx:id="scrollPane" pannable="true" 
+                style="-fx-background:#13131f; -fx-background-color:#13131f; -fx-border-color: transparent;">
+        <Group fx:id="zoomGroup">
+            <GridPane fx:id="cityGrid"
+                      hgap="1" vgap="1"
+                      style="-fx-background-color:#13131f; -fx-padding:8;"/>
+        </Group>
+    </ScrollPane>
+
+    <HBox alignment="TOP_CENTER" pickOnBounds="false" StackPane.alignment="TOP_CENTER">
+        <StackPane.margin>
+            <Insets top="15"/>
+        </StackPane.margin>
+        <VBox fx:id="zoomContainer" alignment="CENTER" spacing="5" 
+              style="-fx-background-color: rgba(30, 30, 46, 0.8); -fx-background-radius: 8; -fx-padding: 8;"
+              maxWidth="250" maxHeight="-Infinity" opacity="0.3">
+            <Label text="Map Zoom (CTRL + Rotellina)" style="-fx-text-fill: white; -fx-font-size: 10; -fx-font-weight: bold;"/>
+            <Slider fx:id="zoomSlider" min="0.5" max="3.0" value="1.0" prefWidth="200"
+                    showTickMarks="false" showTickLabels="false"/>
+        </VBox>
+    </HBox>
+
+</StackPane>
