@@ -8,13 +8,15 @@
            fx:controller="com.cityproject.presentation.GridController"
            style="-fx-background-color:#13131f;">
     
-    <ScrollPane fx:id="scrollPane" pannable="true" 
+    <ScrollPane fx:id="scrollPane" pannable="true" fitToWidth="true" fitToHeight="true"
                 style="-fx-background:#13131f; -fx-background-color:#13131f; -fx-border-color: transparent;">
-        <Group fx:id="zoomGroup">
-            <GridPane fx:id="cityGrid"
-                      hgap="1" vgap="1"
-                      style="-fx-background-color:#13131f; -fx-padding:8;"/>
-        </Group>
+        <StackPane>
+            <Group fx:id="zoomGroup">
+                <GridPane fx:id="cityGrid"
+                          hgap="1" vgap="1"
+                          style="-fx-background-color:#13131f; -fx-padding:8;"/>
+            </Group>
+        </StackPane>
     </ScrollPane>
 
     <HBox alignment="TOP_CENTER" pickOnBounds="false" StackPane.alignment="TOP_CENTER">
