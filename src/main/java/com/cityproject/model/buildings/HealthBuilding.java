@@ -28,10 +28,13 @@ public class HealthBuilding extends Infrastructure implements HasMaintenance, Ha
     }
     @Override public int getEnergyConsumption() { return 20; }
 
+    private static double getHealthBoost(Type t) {
+        return switch (t) { case CLINIC -> 1.0; case HOSPITAL -> 3.0; };
+    }
     @Override
     public void applyEffects(CityState city) {
         if (!isActive()) return;
-        double healthBoost = switch (type) { case CLINIC -> 1.0; case HOSPITAL -> 3.0; };
+        double healthBoost = getHealthBoost(type);
         city.setGlobalHealth(city.getGlobalHealth() + healthBoost);
     }
 

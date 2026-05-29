@@ -21,17 +21,5 @@ public class FireStation extends Infrastructure implements HasFireCoverage, HasM
     @Override public int getEnergyConsumption() { return 10; }
 
     @Override
-    public void applyEffects(CityState city) {
-        if (!isActive()) return;
-        // Mark all cells within radius as fire-protected
-        for (int dx = -getFireRadius(); dx <= getFireRadius(); dx++) {
-            for (int dy = -getFireRadius(); dy <= getFireRadius(); dy++) {
-                int nx = getX() + dx;
-                int ny = getY() + dy;
-                if (city.isValid(nx, ny)) {
-                    city.getCell(nx, ny).setFireProtection(true);
-                }
-            }
-        }
-    }
+    public void applyEffects(CityState city) {}
 }
