@@ -1,5 +1,4 @@
 com\cityproject\engine\EnergyBalanceManager.class
-com\cityproject\model\factory\info.txt
 com\cityproject\engine\Helpers\AreaEffectHelper.class
 com\cityproject\model\components\EnergyComponent.class
 com\cityproject\model\Cell.class
@@ -15,7 +14,6 @@ com\cityproject\engine\FireProtectionManager.class
 com\cityproject\model\policy\GreenPolicy.class
 com\cityproject\engine\PopulationHappinessHealthManager.class
 com\cityproject\presentation\LogController.class
-com\cityproject\model\info.txt
 com\cityproject\model\components\IncomeComponent.class
 com\cityproject\model\components\PollutionComponent.class
 com\cityproject\model\factory\BuildingFactory.class
@@ -33,7 +31,6 @@ com\cityproject\model\CityState.class
 com\cityproject\model\components\FireCoverageComponent.class
 com\cityproject\model\components\HousingComponent.class
 com\cityproject\model\CityObserver.class
-com\cityproject\model\components\info.txt
 com\cityproject\presentation\ControlsController.class
 com\cityproject\engine\EventManager.class
 com\cityproject\engine\SimulationEngine.class

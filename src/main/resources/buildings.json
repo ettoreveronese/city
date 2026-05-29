@@ -16,7 +16,7 @@
   {
     "id": "COTTAGE",
     "name": "Cottage",
-    "buildCost": 20,
+    "buildCost": 50,
     "housingCapacity": 10,
     "energyConsumption": 5,
     "baseIncome": 2
@@ -24,7 +24,7 @@
   {
     "id": "CONDO",
     "name": "Condominio",
-    "buildCost": 80,
+    "buildCost": 280,
     "housingCapacity": 50,
     "energyConsumption": 25,
     "baseIncome": 10
@@ -32,9 +32,9 @@
   {
     "id": "SKYSCRAPER",
     "name": "Grattacielo",
-    "buildCost": 300,
+    "buildCost": 3000,
     "housingCapacity": 200,
-    "energyConsumption": 100,
+    "energyConsumption": 350,
     "baseIncome": 50
   },
 
@@ -44,25 +44,25 @@
   {
     "id": "FOOD",
     "name": "Industria Alimentare",
-    "buildCost": 50,
+    "buildCost": 150,
     "baseIncome": 20,
-    "energyConsumption": 10,
+    "energyConsumption": 15,
     "pollutionGenerated": 10,
     "pollutionRadius": 2
   },
   {
     "id": "METALLURGICAL",
     "name": "Industria Metallurgica",
-    "buildCost": 150,
+    "buildCost": 370,
     "baseIncome": 60,
-    "energyConsumption": 30,
+    "energyConsumption": 37,
     "pollutionGenerated": 40,
     "pollutionRadius": 4
   },
   {
     "id": "PETROCHEMICAL",
     "name": "Industria Petrolchimica",
-    "buildCost": 400,
+    "buildCost": 1500,
     "baseIncome": 150,
     "energyConsumption": 80,
     "pollutionGenerated": 100,
@@ -75,50 +75,47 @@
   {
     "id": "WIND",
     "name": "Centrale Eolica",
-    "buildCost": 150,
-    "energyProduction": 20,
-    "maintenanceCost": 2
+    "buildCost": 100,
+    "energyProduction": 10,
+    "maintenanceCost": 5
   },
   {
     "id": "SOLAR",
     "name": "Centrale Solare",
     "buildCost": 250,
-    "energyProduction": 40,
-    "maintenanceCost": 5
+    "energyProduction": 25,
+    "maintenanceCost": 20
   },
   {
     "id": "INCINERATOR",
     "name": "Inceneritore",
-    "buildCost": 300,
-    "energyProduction": 80,
-    "maintenanceCost": 15,
+    "buildCost": 470,
+    "energyProduction": 50,
     "pollutionGenerated": 50,
     "pollutionRadius": 4
   },
   {
     "id": "COAL",
     "name": "Centrale a Carbone",
-    "buildCost": 200,
+    "buildCost": 1500,
     "energyProduction": 100,
-    "maintenanceCost": 20,
     "pollutionGenerated": 80,
     "pollutionRadius": 5
   },
   {
     "id": "OIL",
     "name": "Centrale a Petrolio",
-    "buildCost": 400,
+    "buildCost": 2800,
     "energyProduction": 250,
-    "maintenanceCost": 40,
     "pollutionGenerated": 120,
     "pollutionRadius": 7
   },
   {
     "id": "NUCLEAR",
     "name": "Centrale Nucleare",
-    "buildCost": 1500,
+    "buildCost": 10500,
     "energyProduction": 800,
-    "maintenanceCost": 100
+    "maintenanceCost": 300
   },
   
   {
@@ -127,26 +124,26 @@
   {
     "id": "PARK",
     "name": "Parco",
-    "buildCost": 40,
-    "maintenanceCost": 5,
-    "pollutionGenerated": -15,
+    "buildCost": 150,
+    "maintenanceCost": 55,
+    "pollutionGenerated": -12,
     "pollutionRadius": 2
   },
   {
     "id": "NATURAL_RESERVE",
     "name": "Riserva Naturale",
-    "buildCost": 150,
-    "maintenanceCost": 20,
-    "pollutionGenerated": -50,
-    "pollutionRadius": 4
+    "buildCost": 450,
+    "maintenanceCost": 120,
+    "pollutionGenerated": -25,
+    "pollutionRadius": 5
   },
   {
     "id": "NATIONAL_PARK",
     "name": "Parco Nazionale",
-    "buildCost": 500,
-    "maintenanceCost": 60,
+    "buildCost": 1500,
+    "maintenanceCost": 260,
     "pollutionGenerated": -120,
-    "pollutionRadius": 6
+    "pollutionRadius": 7
   },
 
   {
@@ -155,23 +152,23 @@
   {
     "id": "CLINIC",
     "name": "Ambulatorio",
-    "buildCost": 100,
-    "maintenanceCost": 10,
-    "healthCapacity": 30
+    "buildCost": 700,
+    "maintenanceCost": 110,
+    "healthCapacity": 100
   },
   {
     "id": "HOSPITAL",
     "name": "Ospedale",
-    "buildCost": 400,
-    "maintenanceCost": 40,
-    "healthCapacity": 100
+    "buildCost": 2400,
+    "maintenanceCost": 540,
+    "healthCapacity": 300
   },
   {
     "id": "FIRE_STATION",
     "name": "Caserma Pompieri",
-    "buildCost": 200,
-    "maintenanceCost": 20,
-    "fireCoverageRadius": 8
+    "buildCost": 570,
+    "maintenanceCost": 220,
+    "fireCoverageRadius": 7
   },
 
   {
@@ -180,18 +177,18 @@
   {
     "id": "CINEMA",
     "name": "Cinema",
-    "buildCost": 150,
-    "maintenanceCost": 15,
+    "buildCost": 350,
+    "maintenanceCost": 50,
     "energyConsumption": 20,
-    "happinessBoost": 30,
+    "happinessBoost": 20,
     "entertainmentRadius": 4
   },
   {
     "id": "AMUSEMENT_PARK",
     "name": "Parco Divertimenti",
-    "buildCost": 600,
-    "maintenanceCost": 50,
-    "energyConsumption": 100,
+    "buildCost": 2600,
+    "maintenanceCost": 450,
+    "energyConsumption": 200,
     "happinessBoost": 80,
     "entertainmentRadius": 8
   }
