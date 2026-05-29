@@ -56,24 +56,24 @@
     <!-- BUILD: Production -->
     <Label text="Production" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
     <Button text="🍞 Food" onAction="#handleSelectBuilding" id="FOOD" maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
-    <Button text="⚙️ Metallurgical" onAction="#handleSelectBuilding" id="METALLURGICAL" maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
+    <Button text="⚙ Metallurgical" onAction="#handleSelectBuilding" id="METALLURGICAL" maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
     <Button text="🛢 Petrochemical" onAction="#handleSelectBuilding" id="PETROCHEMICAL" maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
 
     <!-- BUILD: Power -->
     <Label text="Power Plants" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
-    <Button text="🌬️ Wind" onAction="#handleSelectBuilding" id="WIND" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
-    <Button text="☀️ Solar" onAction="#handleSelectBuilding" id="SOLAR" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
-    <Button text="☢️ Nuclear" onAction="#handleSelectBuilding" id="NUCLEAR" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="🌀 Wind" onAction="#handleSelectBuilding" id="WIND" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="☀ Solar" onAction="#handleSelectBuilding" id="SOLAR" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="☢ Nuclear" onAction="#handleSelectBuilding" id="NUCLEAR" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
     <Button text="🔥 Incinerator" onAction="#handleSelectBuilding" id="INCINERATOR" maxWidth="Infinity" style="-fx-background-color:#3b1f1f; -fx-text-fill:white;"/>
-    <Button text="🛢️ Oil" onAction="#handleSelectBuilding" id="OIL" maxWidth="Infinity" style="-fx-background-color:#3b1f1f; -fx-text-fill:white;"/>
+    <Button text="🛢 Oil" onAction="#handleSelectBuilding" id="OIL" maxWidth="Infinity" style="-fx-background-color:#3b1f1f; -fx-text-fill:white;"/>
     <Button text="🏭 Coal" onAction="#handleSelectBuilding" id="COAL" maxWidth="Infinity" style="-fx-background-color:#3b1f1f; -fx-text-fill:white;"/>
 
     <!-- BUILD: Services -->
     <Label text="Services &amp; Parks" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
     <Button text="🌳 Park" onAction="#handleSelectBuilding" id="PARK" maxWidth="Infinity" style="-fx-background-color:#14532d; -fx-text-fill:white;"/>
     <Button text="🌲 Nat. Reserve" onAction="#handleSelectBuilding" id="NATURAL_RESERVE" maxWidth="Infinity" style="-fx-background-color:#14532d; -fx-text-fill:white;"/>
-    <Button text="🏔️ Nat. Park" onAction="#handleSelectBuilding" id="NATIONAL_PARK" maxWidth="Infinity" style="-fx-background-color:#14532d; -fx-text-fill:white;"/>
-    <Button text="⚕️ Clinic" onAction="#handleSelectBuilding" id="CLINIC" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="🏔 Nat. Park" onAction="#handleSelectBuilding" id="NATIONAL_PARK" maxWidth="Infinity" style="-fx-background-color:#14532d; -fx-text-fill:white;"/>
+    <Button text="⚕ Clinic" onAction="#handleSelectBuilding" id="CLINIC" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
     <Button text="🏥 Hospital" onAction="#handleSelectBuilding" id="HOSPITAL" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
     <Button text="🚒 Fire Station" onAction="#handleSelectBuilding" id="FIRE_STATION" maxWidth="Infinity" style="-fx-background-color:#7f1d1d; -fx-text-fill:white;"/>
 

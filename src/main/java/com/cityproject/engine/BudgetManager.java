@@ -12,10 +12,14 @@ import com.cityproject.model.policy.CityPolicy;
 public class BudgetManager {
 
     private final CityState city;
-    private final CityPolicy activePolicy;
+    private CityPolicy activePolicy;
 
     public BudgetManager(CityState city, CityPolicy activePolicy) {
         this.city = city;
+        this.activePolicy = activePolicy;
+    }
+
+    public void setActivePolicy(CityPolicy activePolicy) {
         this.activePolicy = activePolicy;
     }
 

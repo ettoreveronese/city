@@ -30,8 +30,6 @@ public class GridController {
     @FXML private VBox zoomContainer;
 
     private static final int CELL_SIZE = 28;
-    private static final int GRID_ROWS = 30;
-    private static final int GRID_COLS = 30;
 
     private CityState cityState;
     private ControlsController controlsController;
@@ -99,8 +97,8 @@ public class GridController {
 
     private void buildGrid() {
         cityGrid.getChildren().clear();
-        for (int row = 0; row < GRID_ROWS; row++) {
-            for (int col = 0; col < GRID_COLS; col++) {
+        for (int row = 0; row < cityState.getRows(); row++) {
+            for (int col = 0; col < cityState.getCols(); col++) {
                 Pane cell = createCellPane(row, col);
                 cityGrid.add(cell, col, row);
             }
@@ -126,6 +124,13 @@ public class GridController {
         populationStatsLabel.setMouseTransparent(true);
         pane.getChildren().add(populationStatsLabel);
 
+        // emoji label (centered)
+        Label emojiLabel = new Label();
+        emojiLabel.setId("emojiLabel");
+        emojiLabel.setStyle("-fx-font-size:14; -fx-alignment: center;");
+        emojiLabel.setMouseTransparent(true);
+        pane.getChildren().add(emojiLabel);
+
         Tooltip tip = new Tooltip();
         pane.setOnMouseEntered(e -> {
             Cell c = cityState.getCell(row, col);
@@ -141,6 +146,12 @@ public class GridController {
     private String getCellStyle(int row, int col) {
         Cell cell = cityState.getCell(row, col);
         String color = getCellColor(cell);
+        
+        if (!cell.isEmpty() && "ROOT_ROAD".equals(cell.getStructure().getType().getId())) {
+            return "-fx-background-color:" + color + ";" +
+                   "-fx-border-color:#fbbf24; -fx-border-width:2;";
+        }
+
         return "-fx-background-color:" + color + ";" +
                "-fx-border-color:#2d2d3d; -fx-border-width:0.5;";
     }
@@ -289,6 +300,20 @@ public class GridController {
                         } else if (currentVision == VisionMode.LOCAL_HEALTH && !cell.isEmpty() && cell.getStructure().hasComponent(com.cityproject.model.components.HousingComponent.class)) {
                             com.cityproject.model.components.HousingComponent hc = cell.getStructure().getComponent(com.cityproject.model.components.HousingComponent.class);
                             lbl.setText(String.format("%d", (int)hc.getLocalHealth()));
+                            lbl.setVisible(true);
+                        } else {
+                            lbl.setText("");
+                            lbl.setVisible(false);
+                        }
+                    }
+                    if (child instanceof Label lbl && "emojiLabel".equals(lbl.getId())) {
+                        if (currentVision == VisionMode.NORMAL && !cell.isEmpty() && cell.getStructure().getType().getEmoji() != null) {
+                            lbl.setText(cell.getStructure().getType().getEmoji());
+                            if (!cell.getStructure().isActive()) {
+                                lbl.setOpacity(0.5);
+                            } else {
+                                lbl.setOpacity(1.0);
+                            }
                             lbl.setVisible(true);
                         } else {
                             lbl.setText("");

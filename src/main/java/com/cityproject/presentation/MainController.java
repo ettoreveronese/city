@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import com.cityproject.engine.SimulationEngine;
 import com.cityproject.model.CityObserver;
 import com.cityproject.model.CityState;
+import com.cityproject.engine.config.ConfigManager;
+import com.cityproject.engine.config.GameConfig;
 import com.cityproject.model.Infrastructure;
 import com.cityproject.model.factory.BuildingFactory;
 import com.cityproject.model.policy.GreenPolicy;
@@ -23,17 +25,20 @@ public class MainController implements Initializable, CityObserver {
     private CityState cityState;
     private SimulationEngine engine;
 
-    private static final int GRID_ROWS = 30;
-    private static final int GRID_COLS = 30;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // 0. Load Configuration
+        GameConfig config = ConfigManager.getConfig();
+        int rows = config.getGridRows();
+        int cols = config.getGridCols();
+        int budget = config.getStartingBudget();
+
         // 1. Create city state
-        cityState = new CityState(GRID_ROWS, GRID_COLS, 50000);
+        cityState = new CityState(rows, cols, budget);
 
         // 2. Place root road at center
-        int cx = GRID_ROWS / 2;
-        int cy = GRID_COLS / 2;
+        int cx = rows / 2;
+        int cy = cols / 2;
         Infrastructure rootRoad = BuildingFactory.getInstance().createBuilding("ROOT_ROAD", cx, cy);
         cityState.addBuilding(rootRoad);
         cityState.getCell(cx, cy).setStructure(rootRoad);
@@ -81,6 +86,13 @@ public class MainController implements Initializable, CityObserver {
         }
     }
 
+    public void logErrorEvent(String message) {
+        if (logViewController != null) {
+            int tick = cityState != null ? cityState.getTick() : 0;
+            logViewController.appendErrorLog(message, tick);
+        }
+    }
+
     // --- Observer callback ---
     
     @Override
@@ -91,6 +103,9 @@ public class MainController implements Initializable, CityObserver {
         }
         if (gridViewController != null) {
             gridViewController.refreshGrid();
+        }
+        if (controlsViewController != null) {
+            controlsViewController.updateLocks(city);
         }
     }
 }

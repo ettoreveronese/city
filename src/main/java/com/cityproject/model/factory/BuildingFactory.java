@@ -56,6 +56,15 @@ public class BuildingFactory {
 
             for (BuildingTypeConfig config : configs) {
                 BuildingType type = new BuildingType(config.id, config.name, config.buildCost);
+                if (config.emoji != null) {
+                    type.setEmoji(config.emoji);
+                }
+                if (config.unlockPopulation != null) {
+                    type.setUnlockPopulation(config.unlockPopulation);
+                }
+                if (config.isRoad != null) {
+                    type.setRoad(config.isRoad);
+                }
                 
                 // Convert config into base components
                 if (config.housingCapacity != null) {
