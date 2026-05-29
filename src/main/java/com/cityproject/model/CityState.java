@@ -26,6 +26,7 @@ public class CityState {
     private double globalHealth;    // 0-100
     private int totalEnergyProduced;
     private int totalEnergyConsumed;
+    private int totalHealthCapacity;
     private int tick;
 
     // --- All placed buildings, kept in a flat list for easy iteration ---
@@ -35,6 +36,7 @@ public class CityState {
     private final List<Infrastructure> maintenanceBuildings = new ArrayList<>();
     private final List<Infrastructure> pollutionBuildings = new ArrayList<>();
     private final List<Infrastructure> energyBuildings = new ArrayList<>();
+    private final List<Infrastructure> healthBuildings = new ArrayList<>();
 
     // --- Observer Pattern: list of observers notified on every state change ---
     private final List<CityObserver> observers = new ArrayList<>();
@@ -76,6 +78,7 @@ public class CityState {
         if (b.hasComponent(com.cityproject.model.components.MaintenanceComponent.class)) maintenanceBuildings.add(b);
         if (b.hasComponent(com.cityproject.model.components.PollutionComponent.class)) pollutionBuildings.add(b);
         if (b.hasComponent(com.cityproject.model.components.EnergyComponent.class)) energyBuildings.add(b);
+        if (b.hasComponent(com.cityproject.model.components.HealthComponent.class)) healthBuildings.add(b);
     }
 
     public void removeBuilding(Infrastructure b) {
@@ -85,6 +88,7 @@ public class CityState {
         maintenanceBuildings.remove(b);
         pollutionBuildings.remove(b);
         energyBuildings.remove(b);
+        healthBuildings.remove(b);
     }
 
     public List<Infrastructure> getBuildings()   { return buildings; }
@@ -93,6 +97,7 @@ public class CityState {
     public List<Infrastructure> getMaintenanceBuildings()   { return maintenanceBuildings; }
     public List<Infrastructure> getPollutionBuildings()   { return pollutionBuildings; }
     public List<Infrastructure> getEnergyBuildings()   { return energyBuildings; }
+    public List<Infrastructure> getHealthBuildings()   { return healthBuildings; }
 
     // --- Getters and setters ---
     public int getRows()            { return rows; }
@@ -116,6 +121,9 @@ public class CityState {
 
     public int getTotalEnergyConsumed() { return totalEnergyConsumed; }
     public void setTotalEnergyConsumed(int totalEnergyConsumed) { this.totalEnergyConsumed = totalEnergyConsumed; }
+
+    public int getTotalHealthCapacity() { return totalHealthCapacity; }
+    public void setTotalHealthCapacity(int totalHealthCapacity) { this.totalHealthCapacity = totalHealthCapacity; }
 
     public int getTick()            { return tick; }
     public void incrementTick()     { this.tick++; }

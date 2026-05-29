@@ -80,6 +80,12 @@
                 <RadioButton fx:id="visionEntertainment" text="Entertainment" toggleGroup="$visionGroup"
                                 onAction="#handleVisionChange"
                                 style="-fx-text-fill:white;"/>
+                <RadioButton fx:id="visionHappiness" text="Local Happiness" toggleGroup="$visionGroup"
+                                onAction="#handleVisionChange"
+                                style="-fx-text-fill:white;"/>
+                <RadioButton fx:id="visionHealth" text="Local Health" toggleGroup="$visionGroup"
+                                onAction="#handleVisionChange"
+                                style="-fx-text-fill:white;"/>
 
                 <Separator/>
 

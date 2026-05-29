@@ -10,6 +10,8 @@
     "buildCost": 5
   },
 
+
+
   {
   "_COMMENT": "RESIDENZE"
   },
@@ -17,13 +19,15 @@
     "id": "COTTAGE",
     "name": "Cottage",
     "buildCost": 20,
-    "housingCapacity": 10
+    "housingCapacity": 10,
+    "energyConsumption": 5
   },
   {
     "id": "CONDO",
     "name": "Condominio",
     "buildCost": 50,
-    "housingCapacity": 50
+    "housingCapacity": 50,
+    "energyConsumption": 20
   },
   {
     "id": "SKYSCRAPER",
@@ -32,6 +36,8 @@
     "housingCapacity": 200,
     "energyConsumption": 50
   },
+
+
 
   {
   "_COMMENT": "INDUSTRIE"
@@ -63,6 +69,8 @@
     "pollutionGenerated": 50,
     "pollutionRadius": 6
   },
+
+
 
   {
   "_COMMENT": "CENTRALI ENERGETICHE"
@@ -114,6 +122,11 @@
     "maintenanceCost": 20,
     "pollutionGenerated": 50,
     "pollutionRadius": 5
+  },
+  
+  
+  {
+  "_COMMENT": "SEVIZI PUBLICI"
   },
   {
     "id": "PARK",

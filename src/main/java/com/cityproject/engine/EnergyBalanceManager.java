@@ -37,6 +37,7 @@ public class EnergyBalanceManager {
             int deficit = totalConsumed - totalProduced;
             List<Infrastructure> candidates = new ArrayList<>();
 
+            // Only consider non-road energy consumers for deactivation
             for (Infrastructure infra : city.getEnergyBuildings()) {
                 if (!infra.isActive()) continue;
                 // Strade let's assume they don't consume energy or are identified by type. 

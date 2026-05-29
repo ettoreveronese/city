@@ -47,7 +47,7 @@ public class MainController implements Initializable, CityObserver {
     @FXML private Label happinessLabel, healthLabel, policyLabel;
     @FXML private Label selectedLabel, energyLabel;
     @FXML private TextArea eventLog;
-    @FXML private RadioButton visionNormal, visionPollution, visionFire, visionEntertainment;
+    @FXML private RadioButton visionNormal, visionPollution, visionFire, visionEntertainment, visionHappiness, visionHealth;
     @FXML private VBox controlsVBox;
 
     // --- Simulation state ---
@@ -61,7 +61,7 @@ public class MainController implements Initializable, CityObserver {
     private static final int GRID_COLS = 20;
 
     // --- Vision modes ---
-    public enum VisionMode { NORMAL, POLLUTION, FIRE, ENTERTAINMENT }
+    public enum VisionMode { NORMAL, POLLUTION, FIRE, ENTERTAINMENT, LOCAL_HAPPINESS, LOCAL_HEALTH }
     private VisionMode currentVision = VisionMode.NORMAL;
 
     @Override
@@ -128,7 +128,8 @@ public class MainController implements Initializable, CityObserver {
                         sb.append("Health: ").append(((HealthComponent)comps.get(HealthComponent.class)).getCapacity()).append("\n");
                     }
                     if (comps.containsKey(FireCoverageComponent.class)) {
-                        sb.append("Fire Coverage: R: ").append(((FireCoverageComponent)comps.get(FireCoverageComponent.class)).getRadius()).append("\n");
+                        FireCoverageComponent fc = (FireCoverageComponent)comps.get(FireCoverageComponent.class);
+                        sb.append("Fire Coverage: R: ").append(fc.getRadius()).append("\n");
                     }
                     if (comps.containsKey(EntertainmentComponent.class)) {
                         EntertainmentComponent ec = (EntertainmentComponent)comps.get(EntertainmentComponent.class);
@@ -167,6 +168,13 @@ public class MainController implements Initializable, CityObserver {
         pollutionLabel.setStyle("-fx-text-fill: white; -fx-font-size:10; -fx-font-weight:bold;");
         pollutionLabel.setMouseTransparent(true);
         pane.getChildren().add(pollutionLabel);
+
+        // population stats label (centered)
+        Label populationStatsLabel = new Label();
+        populationStatsLabel.setId("populationStatsLabel");
+        populationStatsLabel.setStyle("-fx-text-fill: white; -fx-font-size:10; -fx-font-weight:bold; -fx-alignment: center; -fx-text-alignment: center;");
+        populationStatsLabel.setMouseTransparent(true);
+        pane.getChildren().add(populationStatsLabel);
 
         // Tooltip showing cell info
         Tooltip tip = new Tooltip();
@@ -213,6 +221,28 @@ public class MainController implements Initializable, CityObserver {
             if (e < 50)   return "#7e22ce"; // medium purple
             if (e < 100)  return "#a855f7"; // bright purple
             return "#d8b4fe"; // light purple
+        }
+
+        // Vision mode: local happiness
+        if (currentVision == VisionMode.LOCAL_HAPPINESS) {
+            if (cell.isEmpty() || !cell.getStructure().hasComponent(com.cityproject.model.components.HousingComponent.class)) {
+                return "#13131f";
+            }
+            com.cityproject.model.components.HousingComponent hc = cell.getStructure().getComponent(com.cityproject.model.components.HousingComponent.class);
+            if (hc.getLocalHappiness() < 40) return "#7f1d1d"; // unhappy (red)
+            if (hc.getLocalHappiness() < 70) return "#92400e"; // neutral (orange/brown)
+            return "#166534"; // happy (green)
+        }
+
+        // Vision mode: local health
+        if (currentVision == VisionMode.LOCAL_HEALTH) {
+            if (cell.isEmpty() || !cell.getStructure().hasComponent(com.cityproject.model.components.HousingComponent.class)) {
+                return "#13131f";
+            }
+            com.cityproject.model.components.HousingComponent hc = cell.getStructure().getComponent(com.cityproject.model.components.HousingComponent.class);
+            if (hc.getLocalHealth() < 40) return "#7f1d1d"; // sick (red)
+            if (hc.getLocalHealth() < 70) return "#b45309"; // neutral
+            return "#1d4ed8"; // healthy (blue)
         }
 
         // Normal mode: color by building type
@@ -332,6 +362,8 @@ public class MainController implements Initializable, CityObserver {
         if (visionPollution.isSelected()) currentVision = VisionMode.POLLUTION;
         else if (visionFire.isSelected()) currentVision = VisionMode.FIRE;
         else if (visionEntertainment.isSelected()) currentVision = VisionMode.ENTERTAINMENT;
+        else if (visionHappiness.isSelected()) currentVision = VisionMode.LOCAL_HAPPINESS;
+        else if (visionHealth.isSelected()) currentVision = VisionMode.LOCAL_HEALTH;
         else currentVision = VisionMode.NORMAL;
         refreshGrid();
     }
@@ -371,6 +403,20 @@ public class MainController implements Initializable, CityObserver {
                     if (child instanceof Label lbl && "pollutionLabel".equals(lbl.getId())) {
                         if (currentVision == VisionMode.POLLUTION) {
                             lbl.setText(String.valueOf(cell.getPollution()));
+                            lbl.setVisible(true);
+                        } else {
+                            lbl.setText("");
+                            lbl.setVisible(false);
+                        }
+                    }
+                    if (child instanceof Label lbl && "populationStatsLabel".equals(lbl.getId())) {
+                        if (currentVision == VisionMode.LOCAL_HAPPINESS && !cell.isEmpty() && cell.getStructure().hasComponent(com.cityproject.model.components.HousingComponent.class)) {
+                            com.cityproject.model.components.HousingComponent hc = cell.getStructure().getComponent(com.cityproject.model.components.HousingComponent.class);
+                            lbl.setText(String.format("%d", (int)hc.getLocalHappiness()));
+                            lbl.setVisible(true);
+                        } else if (currentVision == VisionMode.LOCAL_HEALTH && !cell.isEmpty() && cell.getStructure().hasComponent(com.cityproject.model.components.HousingComponent.class)) {
+                            com.cityproject.model.components.HousingComponent hc = cell.getStructure().getComponent(com.cityproject.model.components.HousingComponent.class);
+                            lbl.setText(String.format("%d", (int)hc.getLocalHealth()));
                             lbl.setVisible(true);
                         } else {
                             lbl.setText("");

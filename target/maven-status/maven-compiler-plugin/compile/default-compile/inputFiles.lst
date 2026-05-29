@@ -2,7 +2,8 @@ C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\BudgetManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EnergyBalanceManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EntertainmentManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\EventManager.java
-C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\HealthAndFireProtectionManager.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\FireProtectionManager.java
+C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\HealthCapacityManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\Helpers\AreaEffectHelper.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\PollutionManager.java
 C:\xampp\htdocs\mio\city\src\main\java\com\cityproject\engine\PopulationHappinessHealthManager.java

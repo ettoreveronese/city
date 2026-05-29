@@ -34,14 +34,12 @@ public class RoadConnectionManager {
     }
 
     private boolean isRoad(Infrastructure b) {
-        return b != null && b.getType() != null && "Road".equals(b.getType().getId());
+        return b != null && b.getType() != null && 
+               ("ROAD".equals(b.getType().getId()) || "ROOT_ROAD".equals(b.getType().getId()));
     }
 
     private boolean isRootRoad(Infrastructure b) {
-        // Assume road at 0,0 or specifically flagged as root. 
-        // We can just define the first road we find as root or a specific type.
-        // For now, let's just use the first road found or one at a specific coordinate.
-        return isRoad(b) && b.getX() == 0 && b.getY() == 0; // Simple fallback
+        return b != null && b.getType() != null && "ROOT_ROAD".equals(b.getType().getId());
     }
 
     private Infrastructure findRootRoad() {

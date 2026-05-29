@@ -42,7 +42,8 @@ public class SimulationEngine {
         RoadConnectionManager rcManager = new RoadConnectionManager(city);
         EnergyBalanceManager ebManager = new EnergyBalanceManager(city);
         PollutionManager pManager = new PollutionManager(city, activePolicy);
-        HealthAndFireProtectionManager hfManager = new HealthAndFireProtectionManager(city);
+        HealthCapacityManager hcManager = new HealthCapacityManager(city);
+        FireProtectionManager fpManager = new FireProtectionManager(city);
         EntertainmentManager entManager = new EntertainmentManager(city);
         PopulationHappinessHealthManager hhManager = new PopulationHappinessHealthManager(city);
         BudgetManager bManager = new BudgetManager(city, activePolicy);
@@ -51,7 +52,8 @@ public class SimulationEngine {
         rcManager.checkConnections();
         ebManager.balanceEnergy();
         pManager.applyPollution();
-        hfManager.applyHealthAndFireProtectionEffects();
+        hcManager.calculateHealthCapacity();
+        fpManager.applyFireProtectionEffects();
         entManager.applyEntertainment();
         hhManager.applyPopulationHappinessHealth();
         bManager.processIncomeAndMaintenance();
