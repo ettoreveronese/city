@@ -9,8 +9,10 @@
       maxHeight="Infinity">
     
     <Label text="Event Log" style="-fx-text-fill:#aaa; -fx-font-size:11; -fx-font-weight: bold;"/>
-    <TextArea fx:id="eventLog" editable="false" 
-              style="-fx-control-inner-background:#13131f; -fx-text-fill:#9ca3af; -fx-font-size:10;"
-              VBox.vgrow="ALWAYS" wrapText="true"/>
+    
+    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" 
+                style="-fx-background:#13131f; -fx-background-color:#13131f; -fx-border-color:transparent;">
+        <VBox fx:id="logContainer" spacing="4" style="-fx-background-color:#13131f; -fx-padding:5;"/>
+    </ScrollPane>
               
 </VBox>

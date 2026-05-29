@@ -1,10 +1,6 @@
 package com.cityproject.presentation;
 
 import com.cityproject.engine.SimulationEngine;
-import com.cityproject.model.policy.GreenPolicy;
-import com.cityproject.model.policy.IndustrialPolicy;
-import com.cityproject.model.type.BuildingType;
-import com.cityproject.model.factory.BuildingFactory;
 import com.cityproject.model.components.Component;
 import com.cityproject.model.components.EnergyComponent;
 import com.cityproject.model.components.EntertainmentComponent;
@@ -14,15 +10,19 @@ import com.cityproject.model.components.HousingComponent;
 import com.cityproject.model.components.IncomeComponent;
 import com.cityproject.model.components.MaintenanceComponent;
 import com.cityproject.model.components.PollutionComponent;
+import com.cityproject.model.factory.BuildingFactory;
+import com.cityproject.model.policy.GreenPolicy;
+import com.cityproject.model.policy.IndustrialPolicy;
+import com.cityproject.model.type.BuildingType;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+/// Controller per la gestione dei controlli laterali (selezione edificio, cambio visione, applicazione policy)
 public class ControlsController {
 
     public enum VisionMode { NORMAL, POLLUTION, FIRE, ENTERTAINMENT, LOCAL_HAPPINESS, LOCAL_HEALTH }
@@ -60,7 +60,17 @@ public class ControlsController {
     @FXML
     private void handleSelectBuilding(javafx.event.ActionEvent e) {
         Button btn = (Button) e.getSource();
-        selectedBuildingType = btn.getId();
+        String id = btn.getId();
+        
+        if (id != null && !id.equals("DELETE") && cityState != null) {
+            BuildingType type = BuildingFactory.getInstance().getBuildingType(id);
+            if (type != null && type.getUnlockPopulation() > cityState.getPopulation()) {
+                logError("Devi raggiungere " + type.getUnlockPopulation() + " Abitanti per sbloccare " + type.getName() + "!");
+                return;
+            }
+        }
+        
+        selectedBuildingType = id;
         if (mainController != null) {
             mainController.onBuildingSelected(selectedBuildingType);
         }
@@ -102,6 +112,13 @@ public class ControlsController {
         }
     }
 
+    public void logError(String message) {
+        if (mainController != null) {
+            mainController.logErrorEvent(message);
+        }
+    }
+
+    // Imposta i tooltip per ogni pulsante edificio, mostrando le statistiche e se è bloccato o meno
     private void setupBuildingTooltips() {
         for (javafx.scene.Node node : controlsVBox.getChildren()) {
             if (node instanceof Button btn) {
@@ -145,12 +162,25 @@ public class ControlsController {
                         EntertainmentComponent ec = (EntertainmentComponent)comps.get(EntertainmentComponent.class);
                         sb.append("Entertainment: +").append(ec.getHappinessBoost()).append(" (R: ").append(ec.getRadius()).append(")\n");
                     }
+                    // Controlla se l'edificio è bloccato o meno in base alla popolazione attuale
+                    int unlockPop = type.getUnlockPopulation();
+                    if (unlockPop > cityState.getPopulation()) {
+                        sb.insert(0, "[BLOCCATO] Richiede " + unlockPop + " Abitanti\n\n");
+                        btn.setOpacity(0.4);
+                    } else {
+                        btn.setOpacity(1.0);
+                    }
                     
                     Tooltip tip = new Tooltip(sb.toString().trim());
                     tip.setShowDelay(Duration.millis(200));
-                    Tooltip.install(btn, tip);
+                    btn.setTooltip(tip);
                 }
             }
         }
+    }
+
+    public void updateLocks(com.cityproject.model.CityState cityState) {
+        this.cityState = cityState;
+        setupBuildingTooltips();
     }
 }

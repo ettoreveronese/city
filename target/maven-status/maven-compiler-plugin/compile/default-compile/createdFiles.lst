@@ -6,10 +6,12 @@ com\cityproject\model\policy\IndustrialPolicy.class
 com\cityproject\engine\PollutionManager.class
 com\cityproject\model\policy\CityPolicy.class
 com\cityproject\engine\HealthCapacityManager.class
+com\cityproject\model\config\GameConfig.class
 com\cityproject\engine\Helpers\AreaEffectHelper$CellEffect.class
 com\cityproject\model\type\BuildingTypeConfig.class
 com\cityproject\model\components\HealthComponent.class
 com\cityproject\model\Infrastructure.class
+com\cityproject\model\config\ConfigManager.class
 com\cityproject\engine\FireProtectionManager.class
 com\cityproject\model\policy\GreenPolicy.class
 com\cityproject\engine\PopulationHappinessHealthManager.class

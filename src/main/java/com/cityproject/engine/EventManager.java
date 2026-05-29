@@ -24,7 +24,8 @@ public class EventManager {
     }
 
     private boolean isRoad(Infrastructure b) {
-        return b != null && b.getType() != null && "Road".equals(b.getType().getId());
+        return b != null && b.getType() != null && 
+               ("ROAD".equals(b.getType().getId()) || "ROOT_ROAD".equals(b.getType().getId()));
     }
 
     private void fireEvent() {

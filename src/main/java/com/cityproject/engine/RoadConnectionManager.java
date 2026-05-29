@@ -22,7 +22,13 @@ public class RoadConnectionManager {
 
     public void checkConnections() {
         Infrastructure rootRoad = findRootRoad();
-        if (rootRoad == null) return;
+        
+        if (rootRoad == null) {
+            for (Infrastructure b : city.getBuildings()) {
+                if (!isRoad(b)) b.setActive(false);
+            }
+            return;
+        }
 
         Set<String> connectedRoadIds = bfsConnectedRoads(rootRoad);
 

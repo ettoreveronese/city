@@ -27,6 +27,7 @@ public class HousingComponent implements Component {
         this.currentResidents = Math.max(0, Math.min(capacity, currentResidents));
     }
 
+    // Ritorna true se il numero di residenti ha raggiunto la capacità massima (per un eventuale nuova funzionalità)
     public boolean isFull() {
         return currentResidents >= capacity;
     }

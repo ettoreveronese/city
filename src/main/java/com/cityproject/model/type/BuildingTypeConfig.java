@@ -6,7 +6,9 @@ package com.cityproject.model.type;
 public class BuildingTypeConfig {
     public String id;
     public String name;
+    public String emoji;
     public int buildCost;
+    public Integer unlockPopulation;
 
     // Component configurations (optional in json)
     public Integer housingCapacity;

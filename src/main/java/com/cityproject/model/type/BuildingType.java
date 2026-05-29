@@ -1,9 +1,9 @@
 package com.cityproject.model.type;
 
-import com.cityproject.model.components.Component;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.cityproject.model.components.Component;
 
 /**
  * Type Object immutabile che rappresenta la configurazione di base di un edificio.
@@ -12,7 +12,9 @@ import java.util.Map;
 public class BuildingType {
     private String id;
     private String name;
+    private String emoji;
     private int buildCost;
+    private int unlockPopulation = 0; // Popolazione necessaria per sbloccare questo edificio
     
     // Configurazione iniziale dei componenti
     private Map<Class<? extends Component>, Component> baseComponents;
@@ -34,8 +36,14 @@ public class BuildingType {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
+    public String getEmoji() { return emoji; }
+    public void setEmoji(String emoji) { this.emoji = emoji; }
+
     public int getBuildCost() { return buildCost; }
     public void setBuildCost(int buildCost) { this.buildCost = buildCost; }
+
+    public int getUnlockPopulation() { return unlockPopulation; }
+    public void setUnlockPopulation(int unlockPopulation) { this.unlockPopulation = unlockPopulation; }
 
     public void addBaseComponent(Component component) {
         this.baseComponents.put(component.getClass(), component);
