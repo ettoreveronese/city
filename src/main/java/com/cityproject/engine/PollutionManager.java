@@ -22,12 +22,9 @@ public class PollutionManager {
     }
 
     public void applyPollution() {
-        // Reset pollution
-        for (int i = 0; i < city.getRows(); i++) {
-            for (int j = 0; j < city.getCols(); j++) {
-                city.getCell(i, j).setPollution(0);
-            }
-        }
+        int rows = city.getRows();
+        int cols = city.getCols();
+        int[][] pollutionGrid = new int[rows][cols];
 
         double modifier = activePolicy.calculatePollutionModifier();
 
@@ -39,10 +36,15 @@ public class PollutionManager {
             AreaEffectHelper.applyInRadius(city, b.getX(), b.getY(), polluter.getRadius(), 
                 (cell, distance) -> {
                     int spread = (int)(polluter.getPollutionGenerated() * modifier / (distance*ATTENUATION + 1));
-                    System.out.println(spread+ " " +polluter.getPollutionGenerated()+ " "+ distance+ " "+ modifier);
-                    cell.setPollution(cell.getPollution() + spread);
-
+                    pollutionGrid[cell.getX()][cell.getY()] += spread;
                 });
+        }
+        
+        // Apply accumulated pollution to cells, clamping at 0
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                city.getCell(i, j).setPollution(pollutionGrid[i][j]);
+            }
         }
     }
 }
