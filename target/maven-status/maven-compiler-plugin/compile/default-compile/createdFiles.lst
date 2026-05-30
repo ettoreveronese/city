@@ -1,4 +1,5 @@
 com\cityproject\engine\EnergyBalanceManager.class
+com\cityproject\engine\events\CityEvent.class
 com\cityproject\model\components\EnergyComponent.class
 com\cityproject\model\Cell.class
 com\cityproject\model\policy\IndustrialPolicy.class
@@ -23,12 +24,14 @@ com\cityproject\model\CityState.class
 com\cityproject\model\components\HousingComponent.class
 com\cityproject\presentation\ControlsController.class
 com\cityproject\engine\EntertainmentManager.class
+com\cityproject\engine\events\PandemicEvent.class
 com\cityproject\engine\Helpers\AreaEffectHelper.class
 com\cityproject\engine\persistence\SaveGameDTO.class
 com\cityproject\engine\PollutionManager.class
 com\cityproject\presentation\StartController.class
 com\cityproject\model\type\BuildingTypeConfig.class
 com\cityproject\model\components\HealthComponent.class
+com\cityproject\engine\events\FireEvent$FireLevel.class
 com\cityproject\engine\FireProtectionManager.class
 com\cityproject\engine\config\GameConfig.class
 com\cityproject\model\components\IncomeComponent.class
@@ -38,6 +41,7 @@ com\cityproject\model\components\MaintenanceComponent.class
 com\cityproject\presentation\ControlsController$VisionMode.class
 com\cityproject\model\components\EntertainmentComponent.class
 com\cityproject\presentation\StatsController.class
+com\cityproject\engine\events\FireEvent.class
 com\cityproject\model\components\FireCoverageComponent.class
 com\cityproject\model\CityObserver.class
 com\cityproject\engine\EventManager.class

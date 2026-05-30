@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\main",
+    "\\src\\main\\java",
+    "\\src\\main\\java\\com",
+    "\\src\\main\\java\\com\\cityproject",
+    "\\src\\main\\java\\com\\cityproject\\engine",
+    "\\src\\main\\java\\com\\cityproject\\model",
+    "\\src\\main\\java\\com\\cityproject\\model\\components",
+    "\\src\\main\\resources"
+  ],
+  "SelectedNode": "\\src\\main\\java\\com\\cityproject\\model\\type",
+  "PreviewInSolutionExplorer": false
+}

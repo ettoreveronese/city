@@ -1,76 +1,74 @@
 package com.cityproject.engine;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.cityproject.model.Cell;
+import com.cityproject.engine.events.FireEvent;
+import com.cityproject.engine.events.PandemicEvent;
 import com.cityproject.model.CityState;
 import com.cityproject.model.Infrastructure;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Manages random events like fires during simulation.
+ * Gestisce gli eventi casuali ogni tick.
+ *
+ * Dado 1 — tipo di evento:
+ *   [0, P_FIRE)                  → FireEvent  (dado 2 determina lieve/grave internamente)
+ *   [P_FIRE, P_FIRE+P_PANDEMIC)  → PandemicEvent
+ *   resto                        → niente
+ *
+ * La pandemia non si sovrappone: se una è attiva non ne parte un'altra.
+ * I danni temporanei (damaged) vengono resettati all'inizio del tick successivo.
  */
 public class EventManager {
-    private final double FIRE_BASE_PROBABILITY = 0.003; // Base fire probability per building
+
+    // ── Probabilità dado 1 ────────────────────────────────────────────────────
+    private static final double P_FIRE     = 0.10;
+    private static final double P_PANDEMIC = 0.10;
+
     private final CityState city;
+
+    private PandemicEvent  activePandemic  = null;          // pandemia in corso
+    private final List<Infrastructure> damagedBuildings = new ArrayList<>(); // edifici danneggiati da resettare
 
     public EventManager(CityState city) {
         this.city = city;
     }
 
     public void processEvents() {
-        fireEvent();
-        // TODO: add CovidEvent, TowerCollapseEvent in next iteration
+        // 1. Reset danni e pandemia del tick precedente
+        resetDamagedBuildings();
+        resetPandemic();
+
+        // 2. Tira dado 1
+        double roll = Math.random();
+
+        if (roll < P_FIRE) {
+            FireEvent fire = new FireEvent();
+            fire.apply(city);
+            // Registra edifici danneggiati per il reset al prossimo tick
+            for (Infrastructure b : city.getBuildings())
+                if (b.isDamaged()) damagedBuildings.add(b);
+
+        } else if (roll < P_FIRE + P_PANDEMIC) {
+            PandemicEvent pandemic = new PandemicEvent();
+            pandemic.apply(city);
+            activePandemic = pandemic;
+        }
+        // else: niente
     }
 
-    private boolean isRoad(Infrastructure b) {
-        return b != null && b.getType() != null && 
-               ("ROAD".equals(b.getType().getId()) || "ROOT_ROAD".equals(b.getType().getId()));
+    private void resetDamagedBuildings() {
+        for (Infrastructure b : damagedBuildings)
+            b.resetDamage();
+        damagedBuildings.clear();
     }
 
-    private void fireEvent() {
-        // Fire probability increases with number of buildings
-        long buildingCount = city.getBuildings().stream()
-            .filter(b -> !isRoad(b)).count();
-        double fireProbability = buildingCount * FIRE_BASE_PROBABILITY;
-
-        if (Math.random() > fireProbability) return;
-
-        // Pick a random non-road, non-root structure
-        List<Infrastructure> targets = new ArrayList<>();
-        for (Infrastructure b : city.getBuildings())
-            if (!isRoad(b) && b.isActive()) targets.add(b);
-
-        if (targets.isEmpty()) return;
-
-        Infrastructure target = targets.get((int)(Math.random() * targets.size()));
-        Cell targetCell = city.getCell(target.getX(), target.getY());
-
-        if (targetCell.hasFireProtection()) {
-            System.out.println("[EVENT] Fire at " + target.getId() + " — contained by fire station.");
-            city.removeBuilding(target);
-            targetCell.setStructure(null);
-        } else {
-            System.out.println("[EVENT] Fire at " + target.getId() + " — spreading!");
-            destroyWithNeighbors(target);
+    private void resetPandemic() {
+        if (activePandemic != null) {
+            activePandemic.reset();
+            activePandemic = null;
         }
     }
 
-    private void destroyWithNeighbors(Infrastructure origin) {
-        int range = 1;
-        for (int dx = -range; dx <= range; dx++) {
-            for (int dy = -range; dy <= range; dy++) {
-                int nx = origin.getX() + dx;
-                int ny = origin.getY() + dy;
-                if (!city.isValid(nx, ny)) continue;
-                Cell cell = city.getCell(nx, ny);
-                Infrastructure s = cell.getStructure();
-                if (s != null && !isRoad(s)) {
-                    city.removeBuilding(s);
-                    cell.setStructure(null);
-                    System.out.println("[EVENT] Building destroyed at " + s.getId());
-                }
-            }
-        }
-    }
+    public boolean isPandemicActive() { return activePandemic != null; }
 }

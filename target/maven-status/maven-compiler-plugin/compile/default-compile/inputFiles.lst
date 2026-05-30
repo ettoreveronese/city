@@ -4,6 +4,9 @@ C:\Users\leona\city\src\main\java\com\cityproject\engine\config\GameConfig.java
 C:\Users\leona\city\src\main\java\com\cityproject\engine\EnergyBalanceManager.java
 C:\Users\leona\city\src\main\java\com\cityproject\engine\EntertainmentManager.java
 C:\Users\leona\city\src\main\java\com\cityproject\engine\EventManager.java
+C:\Users\leona\city\src\main\java\com\cityproject\engine\events\CityEvent.java
+C:\Users\leona\city\src\main\java\com\cityproject\engine\events\FireEvent.java
+C:\Users\leona\city\src\main\java\com\cityproject\engine\events\PandemicEvent.java
 C:\Users\leona\city\src\main\java\com\cityproject\engine\FireProtectionManager.java
 C:\Users\leona\city\src\main\java\com\cityproject\engine\HealthCapacityManager.java
 C:\Users\leona\city\src\main\java\com\cityproject\engine\Helpers\AreaEffectHelper.java
