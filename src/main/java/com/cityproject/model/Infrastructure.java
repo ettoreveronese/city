@@ -1,43 +1,52 @@
 package com.cityproject.model;
 
-/**
- * Abstract base class for ALL buildings and infrastructure in the city.
- * GRASP Information Expert: each building knows its own data.
- * Every concrete subclass must implement applyEffects() and getEnergyConsumption().
- */
-public abstract class Infrastructure {
+import com.cityproject.model.components.Component;
+import com.cityproject.model.type.BuildingType;
 
-    private final String id;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Entità concreta principale nel pattern ECS.
+ * Contiene i suoi dati base (identità e posizione) e la lista dei suoi componenti.
+ */
+public class Infrastructure {
+
+    private final String id;       // Identificatore univoco dell'istanza
+    private final BuildingType type; // Tipo condiviso letto dal JSON
     private final int x;
     private final int y;
     private boolean active;
-    private final int buildCost;
+    
+    // Mappa dei componenti, indicizzata per classe per accesso O(1)
+    private final Map<Class<? extends Component>, Component> components;
 
-    public Infrastructure(String id, int x, int y, int buildCost) {
+    public Infrastructure(String id, BuildingType type, int x, int y) {
         this.id = id;
+        this.type = type;
         this.x = x;
         this.y = y;
         this.active = true;
-        this.buildCost = buildCost;
+        this.components = new HashMap<>();
     }
 
-    /**
-     * How much energy this building consumes per tick.
-     * Used by SimulationEngine to compute energy balance.
-     */
-    public abstract int getEnergyConsumption();
+    public void addComponent(Component component) {
+        this.components.put(component.getClass(), component);
+    }
 
-    /**
-     * Apply this building's effects to the city state each tick.
-     * Called by SimulationEngine during the tick cycle.
-     */
-    public abstract void applyEffects(CityState city);
+    public <T extends Component> T getComponent(Class<T> componentClass) {
+        return componentClass.cast(components.get(componentClass));
+    }
+
+    public boolean hasComponent(Class<? extends Component> componentClass) {
+        return components.containsKey(componentClass);
+    }
 
     // --- Getters ---
-    public String getId()       { return id; }
-    public int getX()           { return x; }
-    public int getY()           { return y; }
-    public boolean isActive()   { return active; }
-    public int getBuildCost()   { return buildCost; }
+    public String getId() { return id; }
+    public BuildingType getType() { return type; }
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
 }

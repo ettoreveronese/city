@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.cityproject.presentation.StartController" style="-fx-background-color: #0f172a;">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <Label text="CityLogic Simulation" textFill="#e2e8f0">
+        <font>
+            <Font name="System Bold" size="36.0" />
+        </font>
+    </Label>
+    <Label text="Costruisci. Gestisci. Sopravvivi." textFill="#94a3b8">
+        <font>
+            <Font size="16.0" />
+        </font>
+        <VBox.margin>
+            <Insets bottom="40.0" />
+        </VBox.margin>
+    </Label>
+
+    <Button mnemonicParsing="false" onAction="#handleNewGame" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="Nuova Partita" />
+    <Button mnemonicParsing="false" onAction="#handleLoadGame" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #10b981; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="Carica Partita" />
+    <Button mnemonicParsing="false" onAction="#handleExitGame" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #ef4444; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand;" text="Esci dal Gioco" />
+    <Label fx:id="errorLabel" textFill="#ef4444" visible="false">
+        <font>
+            <Font name="System Bold" size="14.0" />
+        </font>
+    </Label>
+</VBox>

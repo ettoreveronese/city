@@ -1,0 +1,31 @@
+Ho utilizzato il Factory Pattern (nella sua accezione di Factory Object o Creator) per centralizzare e isolare completamente 
+la complessa logica di costruzione degli edifici. Lo trovi implementato nella classe BuildingFactory.java.
+
+Ecco in che modo e perché è stato applicato:
+
+1.Occultamento della Complessità (Incapsulamento): 
+    Nell'architettura ECS pura che abbiamo implementato, un edificio non è più una semplice classe (come new Skyscraper()),
+    ma è un'entità generica (Infrastructure) che richiede di essere "assemblata" aggiungendo i giusti 
+    componenti (es. HousingComponent, EnergyComponent, ecc.). La Factory si occupa di questo "sporco lavoro". 
+    Chi chiama la Factory non ha bisogno di sapere di quali componenti è composto un Grattacielo.
+
+2.Accoppiato con il pattern Singleton: 
+    La classe BuildingFactory viene istanziata una singola volta. 
+    Al suo avvio carica il file buildings.json in memoria creando un registro (Registry) di "Tipi Base" (Pattern Type Object). 
+    Questo fa in modo che la lenta lettura del file JSON non venga ripetuta ogni volta che si posiziona un nuovo edificio, garantendo 
+    massime performance.
+
+3.Invocazione semplificata per il Controller: Se guardi nel MainController, 
+    per far comparire un grattacielo nella griglia, il codice fa semplicemente:
+
+
+// java
+// Infrastructure building = BuildingFactory.getInstance().createBuilding("SKYSCRAPER", row, col);
+A questo punto la Factory:
+    Trova l'ID "SKYSCRAPER" nel suo registro.
+    Crea un'istanza vuota di Infrastructure.
+    Clona e inizializza i nuovi componenti indipendenti per quel grattacielo e li aggancia all'entità.
+    Restituisce l'oggetto pronto per essere posizionato nel gioco.
+In conclusione, usando il Factory Pattern abbiamo rispettato in pieno i principi GRASP (Creator e Basso Accoppiamento): 
+la UI sa solo che vuole un edificio con un certo nome, e sarà l'esperto (la Factory) a sapere 
+come quell'edificio deve essere concretamente "fabbricato".

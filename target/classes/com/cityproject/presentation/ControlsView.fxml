@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<!-- 
+    ControlsView.fxml - La barra laterale destra che contiene i pulsanti per interagire con la città: avanzare il tick, selezionare edifici da costruire o demolire, cambiare la modalità di visualizzazione e attivare politiche.
+    Utilizza un VBox con Button e RadioButton per organizzare le azioni disponibili, con stili personalizzati per colori e font.
+    Il controller associato è ControlsController.java che gestisce gli eventi dei pulsanti e aggiorna la vista in base alle azioni dell'utente.
+-->
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.cityproject.presentation.ControlsController"
+            fitToWidth="true"
+            style="-fx-background-color:#1e1e2e; -fx-background:#1e1e2e;"
+            prefWidth="210">
+    <VBox fx:id="controlsVBox" spacing="10" style="-fx-background-color:#1e1e2e; -fx-padding:16;"
+          prefWidth="190">
+
+    <fx:define>
+        <ToggleGroup fx:id="visionGroup"/>
+    </fx:define>
+
+    <!-- TICK button -->
+    <Button fx:id="tickButton" text="⏭ Next Tick"
+            onAction="#handleTick"
+            maxWidth="Infinity"
+            style="-fx-background-color:#6366f1; -fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:14; -fx-padding:8;"/>
+    <Button text="🗑 Delete Building" onAction="#handleSelectBuilding" id="DELETE"
+            maxWidth="Infinity"
+            style="-fx-background-color:#4a0000; -fx-text-fill:white; -fx-font-weight:bold; -fx-font-size:13; -fx-padding:8;"/>
+
+    <Separator/>
+
+    <!-- VISION MODE -->
+    <Label text="Vision Mode" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+    <RadioButton fx:id="visionNormal" text="Normal" toggleGroup="$visionGroup" onAction="#handleVisionChange" selected="true" style="-fx-text-fill:white;"/>
+    <RadioButton fx:id="visionPollution" text="Pollution" toggleGroup="$visionGroup" onAction="#handleVisionChange" style="-fx-text-fill:white;"/>
+    <RadioButton fx:id="visionFire" text="Fire Cover" toggleGroup="$visionGroup" onAction="#handleVisionChange" style="-fx-text-fill:white;"/>
+    <RadioButton fx:id="visionEntertainment" text="Entertainment" toggleGroup="$visionGroup" onAction="#handleVisionChange" style="-fx-text-fill:white;"/>
+    <RadioButton fx:id="visionHappiness" text="Local Happiness" toggleGroup="$visionGroup" onAction="#handleVisionChange" style="-fx-text-fill:white;"/>
+    <RadioButton fx:id="visionHealth" text="Local Health" toggleGroup="$visionGroup" onAction="#handleVisionChange" style="-fx-text-fill:white;"/>
+
+    <Separator/>
+
+    <!-- POLICY -->
+    <Label text="Active Policy" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+    <Button text="🌿 Green Policy" onAction="#handleGreenPolicy" maxWidth="Infinity" style="-fx-background-color:#166534; -fx-text-fill:white;"/>
+    <Button text="🏭 Industrial Policy" onAction="#handleIndustrialPolicy" maxWidth="Infinity" style="-fx-background-color:#7c2d12; -fx-text-fill:white;"/>
+
+    <Separator/>
+
+    <!-- BUILD: Residences -->
+    <Label text="Residences" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+    <Button text="🏠 Cottage" onAction="#handleSelectBuilding" id="COTTAGE" maxWidth="Infinity" style="-fx-background-color:#2d4a22; -fx-text-fill:white;"/>
+    <Button text="🏢 Condo" onAction="#handleSelectBuilding" id="CONDO" maxWidth="Infinity" style="-fx-background-color:#2d4a22; -fx-text-fill:white;"/>
+    <Button text="🏙 Skyscraper" onAction="#handleSelectBuilding" id="SKYSCRAPER" maxWidth="Infinity" style="-fx-background-color:#2d4a22; -fx-text-fill:white;"/>
+
+    <!-- BUILD: Production -->
+    <Label text="Production" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+    <Button text="🍞 Food" onAction="#handleSelectBuilding" id="FOOD" maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
+    <Button text="⚙ Metallurgical" onAction="#handleSelectBuilding" id="METALLURGICAL" maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
+    <Button text="🛢 Petrochemical" onAction="#handleSelectBuilding" id="PETROCHEMICAL" maxWidth="Infinity" style="-fx-background-color:#78350f; -fx-text-fill:white;"/>
+
+    <!-- BUILD: Power -->
+    <Label text="Power Plants" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+    <Button text="🌀 Wind" onAction="#handleSelectBuilding" id="WIND" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="☀ Solar" onAction="#handleSelectBuilding" id="SOLAR" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="☢ Nuclear" onAction="#handleSelectBuilding" id="NUCLEAR" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="🔥 Incinerator" onAction="#handleSelectBuilding" id="INCINERATOR" maxWidth="Infinity" style="-fx-background-color:#3b1f1f; -fx-text-fill:white;"/>
+    <Button text="🛢 Oil" onAction="#handleSelectBuilding" id="OIL" maxWidth="Infinity" style="-fx-background-color:#3b1f1f; -fx-text-fill:white;"/>
+    <Button text="🏭 Coal" onAction="#handleSelectBuilding" id="COAL" maxWidth="Infinity" style="-fx-background-color:#3b1f1f; -fx-text-fill:white;"/>
+
+    <!-- BUILD: Services -->
+    <Label text="Services &amp; Parks" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+    <Button text="🌳 Park" onAction="#handleSelectBuilding" id="PARK" maxWidth="Infinity" style="-fx-background-color:#14532d; -fx-text-fill:white;"/>
+    <Button text="🌲 Nat. Reserve" onAction="#handleSelectBuilding" id="NATURAL_RESERVE" maxWidth="Infinity" style="-fx-background-color:#14532d; -fx-text-fill:white;"/>
+    <Button text="🏔 Nat. Park" onAction="#handleSelectBuilding" id="NATIONAL_PARK" maxWidth="Infinity" style="-fx-background-color:#14532d; -fx-text-fill:white;"/>
+    <Button text="⚕ Clinic" onAction="#handleSelectBuilding" id="CLINIC" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="🏥 Hospital" onAction="#handleSelectBuilding" id="HOSPITAL" maxWidth="Infinity" style="-fx-background-color:#1e3a5f; -fx-text-fill:white;"/>
+    <Button text="🚒 Fire Station" onAction="#handleSelectBuilding" id="FIRE_STATION" maxWidth="Infinity" style="-fx-background-color:#7f1d1d; -fx-text-fill:white;"/>
+
+    <Separator/>
+
+    <!-- BUILD: Entertainment -->
+    <Label text="Entertainment" style="-fx-text-fill:#aaa; -fx-font-size:11;"/>
+    <Button text="🎬 Cinema" onAction="#handleSelectBuilding" id="CINEMA" maxWidth="Infinity" style="-fx-background-color:#9333ea; -fx-text-fill:white;"/>
+    <Button text="🎢 Amusement Park" onAction="#handleSelectBuilding" id="AMUSEMENT_PARK" maxWidth="Infinity" style="-fx-background-color:#9333ea; -fx-text-fill:white;"/>
+
+    <Separator/>
+
+    <Button text="🛣 Road" onAction="#handleSelectBuilding" id="ROAD" maxWidth="Infinity" style="-fx-background-color:#374151; -fx-text-fill:white;"/>
+
+    </VBox>
+</ScrollPane>
